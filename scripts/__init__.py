@@ -1,1 +1,0 @@
-from scripts.initialize_db.initialize_database import create_tables
