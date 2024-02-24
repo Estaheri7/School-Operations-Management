@@ -67,6 +67,15 @@ class MySQLConnector:
         except Error as e:
             print(e)
 
+    def create_tables(self, table_queries):
+        """
+        Initializes Database tables with given parameter.
+
+        :param table_queries: A dictionary with table names as keys and corresponding table queries as values.
+        """
+        for query in table_queries.values():
+            self.create_table(query)
+
     def execute_query(self, query, params=None):
         """
         Executes the given query with optional parameters.
