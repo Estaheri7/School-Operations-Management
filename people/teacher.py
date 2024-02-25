@@ -1,4 +1,4 @@
-from .person import *
+from people.person import *
 
 
 class Teacher(Person):
