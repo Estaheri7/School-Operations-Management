@@ -1,5 +1,5 @@
 class Classroom:
-    def __init__(self, class_name, current_enrollment, class_code, course_code, teacher_id):
+    def __init__(self, class_name, current_enrollment, class_code, course_code, teacher_code):
         """
         Initializes the MySQLConnector object with the provided parameters.
 
@@ -7,13 +7,13 @@ class Classroom:
         :param current_enrollment: Number of current enrollments.
         :param class_code: Unique parameter to set code for each classroom.
         :param course_code: foreign column from course object.
-        :param teacher_id: foreign column from teacher object.
+        :param teacher_code: foreign column from teacher object.
         """
         self.class_name = class_name
         self.current_enrollment = current_enrollment
         self.class_code = class_code
         self.course_code = course_code
-        self.teacher_id = teacher_id
+        self.teacher_code = teacher_code
 
     def add_classroom(self, database):
         """
@@ -22,7 +22,7 @@ class Classroom:
         :param database: A MySQLConnector object which is connected to database.
         """
         add_query = """
-            INSERT INTO classrooms(name, current_enrollment, class_code, course_id, teacher_id)
+            INSERT INTO classrooms(name, current_enrollment, class_code, course_code, teacher_code)
             VALUES(%s, %s, %s, %s, %s);    
         """
         values = (
@@ -30,7 +30,7 @@ class Classroom:
             self.current_enrollment,
             self.class_code,
             self.course_code,
-            self.teacher_id
+            self.teacher_code
         )
         try:
             database.execute_query(query=add_query, params=values)
