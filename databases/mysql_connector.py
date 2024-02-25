@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from databases.table_queries import tables
 
 
 class MySQLConnector:
@@ -37,7 +38,7 @@ class MySQLConnector:
             )
             self.cursor = self.db.cursor()
         except Error as e:
-            print(e)
+            raise e
 
     def create_database(self, name):
         """
@@ -53,7 +54,7 @@ class MySQLConnector:
             self.db.database = name
             self.db_name = name
         except Error as e:
-            print(e)
+            raise e
 
     def create_table(self, query):
         """
@@ -65,7 +66,7 @@ class MySQLConnector:
         try:
             self.cursor.execute(query)
         except Error as e:
-            print(e)
+            raise e
 
     def create_tables(self, table_queries):
         """
@@ -90,7 +91,7 @@ class MySQLConnector:
             if self.cursor.with_rows:
                 return self.cursor.fetchall()
         except Error as e:
-            print(e)
+            raise e
 
     def commit(self):
         """
