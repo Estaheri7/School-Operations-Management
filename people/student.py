@@ -2,8 +2,6 @@ from .person import *
 
 
 class Student(Person):
-    student_id = 0
-
-    def __init__(self, name, email, password, gender):
+    def __init__(self, name, email, password, gender, student_code):
         super().__init__(name, email, password, gender)
-        Student.student_id += 1
+        self.student_code = student_code
