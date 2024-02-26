@@ -1,7 +1,7 @@
 class Classroom:
     def __init__(self, class_name, current_enrollment, class_code, course_code, teacher_code):
         """
-        Initializes the MySQLConnector object with the provided parameters.
+        Initializes the Classroom object with the provided parameters.
 
         :param class_name: A string for setting name of the class.
         :param current_enrollment: Number of current enrollments.

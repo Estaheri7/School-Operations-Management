@@ -1,7 +1,7 @@
 class Course:
     def __init__(self, name, course_code, capacity):
         """
-        Initializes the MySQLConnector object with the provided parameters.
+        Initializes the Course object with the provided parameters.
 
         :param name: A name for each course object.
         :param course_code: A unique value for each course.
