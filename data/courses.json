@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Mathematics",
+    "course_code": 1001,
+    "capacity": 50
+  },
+  {
+    "name": "Science",
+    "course_code": 1002,
+    "capacity": 40
+  },
+  {
+    "name": "English",
+    "course_code": 1003,
+    "capacity": 45
+  }
+]
