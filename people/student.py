@@ -61,3 +61,25 @@ class Student(Person):
             print(f"Student with code {person_code} removed!")
         except:
             print("Failed to remove Student")
+
+    @staticmethod
+    def enroll(database, student_code, class_code):
+        """
+        Enrolls a class for given student_code.
+
+        :param database: A MySQLConnector object which is connected to database.
+        :param student_code: given student to enroll.
+        :param class_code:  given class for enroll.
+        """
+
+        enroll_query = """
+        INSERT INTO student_classes(student_code, class_code)
+        VALUES (%s, %s)
+        """
+        
+        try:
+            database.execute_query(query=enroll_query, params=(student_code, class_code))
+            database.commit()
+            print("Enrolled to class successfully!")
+        except:
+            print("Failed to enroll class")
