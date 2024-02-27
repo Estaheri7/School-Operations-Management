@@ -39,3 +39,25 @@ class Student(Person):
             database.commit()
         except:
             print("Failed to add student")
+
+    @staticmethod
+    def remove_person(database, person_code):
+        """
+        Removes a student record from database.
+        If a selected student is enrolled in a class, their record will be removed from
+        the student_classes table.
+
+        :param database: A MySQLConnector object which is connected to database.
+        :param person_code: A unique code to remove student.
+        """
+
+        remove_query = """
+        DELETE FROM students WHERE student_code = (%s)
+        """
+
+        try:
+            database.execute_query(query=remove_query, params=(person_code,))
+            database.commit()
+            print(f"Student with code {person_code} removed!")
+        except:
+            print("Failed to remove Student")
