@@ -1,4 +1,12 @@
+from databases import MySQLConnector
+import json
+
+
 class Classroom:
+    with open("databases/db_info.json", "r") as file:
+        db_info = json.load(file)
+    DB = MySQLConnector(**db_info)
+
     def __init__(self, class_name, current_enrollment, class_code, course_code, teacher_code):
         """
         Initializes the Classroom object with the provided parameters.
@@ -15,11 +23,9 @@ class Classroom:
         self.course_code = course_code
         self.teacher_code = teacher_code
 
-    def add_classroom(self, database):
+    def add_classroom(self):
         """
         Adds new classroom to school.
-
-        :param database: A MySQLConnector object which is connected to database.
         """
         add_query = """
             INSERT INTO classrooms(name, current_enrollment, class_code, course_code, teacher_code)
@@ -33,18 +39,17 @@ class Classroom:
             self.teacher_code
         )
         try:
-            database.execute_query(query=add_query, params=values)
-            database.commit()
+            Classroom.DB.execute_query(query=add_query, params=values)
+            Classroom.DB.commit()
         except:
             print("Failed to add classroom")
 
-    @staticmethod
-    def remove_classroom(database, class_code):
+    @classmethod
+    def remove_classroom(cls, class_code):
         """
         Removes a record of classroom from database.
         Records for enrolled students in this class will be removed from student_classes table.
 
-        :param database: A MySQLConnector object which is connected to database.
         :param class_code: A unique code selected to remove classroom.
         """
 
@@ -53,8 +58,8 @@ class Classroom:
         """
 
         try:
-            database.execute_query(query=remove_query, params=(class_code,))
-            database.commit()
+            cls.DB.execute_query(query=remove_query, params=(class_code,))
+            cls.DB.commit()
             print(f"Classroom with code {class_code} removed!")
         except:
             print("Failed to delete classroom!")

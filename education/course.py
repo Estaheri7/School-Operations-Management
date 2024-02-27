@@ -1,4 +1,12 @@
+from databases import MySQLConnector
+import json
+
+
 class Course:
+    with open("databases/db_info.json", "r") as file:
+        db_info = json.load(file)
+    DB = MySQLConnector(**db_info)
+
     def __init__(self, name, course_code, capacity):
         """
         Initializes the Course object with the provided parameters.
@@ -11,11 +19,9 @@ class Course:
         self.course_code = course_code
         self.capacity = capacity
 
-    def add_course(self, database):
+    def add_course(self):
         """
         Adds new course to school.
-
-        :param database: A MySQLConnector object which is connected to database.
         """
         query = """
             INSERT INTO courses(name, course_code, capacity)
@@ -23,19 +29,18 @@ class Course:
         """
         values = (self.name, self.course_code, self.capacity)
         try:
-            database.execute_query(query=query, params=values)
-            database.commit()
+            Course.DB.execute_query(query=query, params=values)
+            Course.DB.commit()
         except:
             print("Failed to add course")
 
-    @staticmethod
-    def remove_course(database, course_code):
+    @classmethod
+    def remove_course(cls, course_code):
         """
         Removes a course record from database.
         If selected course is in a classroom, Its classroom will be deleted
         and records from student_classes for that class will be removed.
 
-        :param database: A MySQLConnector object which is connected to database.
         :param course_code: A unique code to remove a course.
         """
 
@@ -44,8 +49,8 @@ class Course:
         """
 
         try:
-            database.execute_query(query=remove_query, params=(course_code,))
-            database.commit()
+            cls.DB.execute_query(query=remove_query, params=(course_code,))
+            cls.DB.commit()
             print(f"Course with code {course_code} removed!")
         except:
             print("Failed to remove course!")
