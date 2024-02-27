@@ -44,15 +44,16 @@ class Classroom:
         Removes a record of classroom from database.
 
         :param database: A MySQLConnector object which is connected to database.
-        :param class_code: A tuple for parameters of query.
+        :param class_code: A unique code selected to remove classroom.
         """
+
         remove_query = """
         DELETE FROM classrooms WHERE class_code = (%s)
         """
 
         try:
-            database.execute_query(query=remove_query, params=class_code)
+            database.execute_query(query=remove_query, params=(class_code,))
             database.commit()
-            print(f"classroom with code {class_code[0]} removed!")
+            print(f"Classroom with code {class_code} removed!")
         except:
             print("Failed to delete classroom!")
