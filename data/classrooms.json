@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Classroom A",
+    "current_enrollment": 30,
+    "class_code": 101,
+    "course_code": 1001,
+    "teacher_code": 101
+  },
+  {
+    "name": "Classroom B",
+    "current_enrollment": 25,
+    "class_code": 102,
+    "course_code": 1002,
+    "teacher_code": 102
+  },
+  {
+    "name": "Classroom C",
+    "current_enrollment": 20,
+    "class_code": 103,
+    "course_code": 1003,
+    "teacher_code": 103
+  }
+]
