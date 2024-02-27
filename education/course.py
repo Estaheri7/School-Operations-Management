@@ -27,3 +27,23 @@ class Course:
             database.commit()
         except:
             print("Failed to add course")
+
+    @staticmethod
+    def remove_course(database, course_code):
+        """
+        Removes a course record from database.
+
+        :param database: A MySQLConnector object which is connected to database.
+        :param course_code: A unique code to remove a course.
+        """
+
+        remove_query = """
+        DELETE FROM courses WHERE course_code = (%s)
+        """
+
+        try:
+            database.execute_query(query=remove_query, params=(course_code,))
+            database.commit()
+            print(f"Course with code {course_code} removed!")
+        except:
+            print("Failed to remove course!")
