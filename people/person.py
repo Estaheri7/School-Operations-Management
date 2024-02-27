@@ -8,3 +8,7 @@ class Person(ABC):
         self.password = password
         self.gender = gender
 
+    @staticmethod
+    def remove_person(database, person_code):
+        pass
+
