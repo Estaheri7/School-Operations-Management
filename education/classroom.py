@@ -37,3 +37,22 @@ class Classroom:
             database.commit()
         except:
             print("Failed to add classroom")
+
+    @staticmethod
+    def remove_classroom(database, class_code):
+        """
+        Removes a record of classroom from database.
+
+        :param database: A MySQLConnector object which is connected to database.
+        :param class_code: A tuple for parameters of query.
+        """
+        remove_query = """
+        DELETE FROM classrooms WHERE class_code = (%s)
+        """
+
+        try:
+            database.execute_query(query=remove_query, params=class_code)
+            database.commit()
+            print(f"classroom with code {class_code[0]} removed!")
+        except:
+            print("Failed to delete classroom!")
