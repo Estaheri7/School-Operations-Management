@@ -1,7 +1,13 @@
 from people.person import *
+from databases import MySQLConnector
+import json
 
 
 class Teacher(Person):
+    with open("databases/db_info.json", "r") as file:
+        db_info = json.load(file)
+    DB = MySQLConnector(**db_info)
+
     def __init__(self, name, email, password, gender, teacher_code, department_id):
         """
         Initializes the Teacher object with the provided parameters.
@@ -17,11 +23,9 @@ class Teacher(Person):
         self.teacher_code = teacher_code
         self.department_id = department_id
 
-    def add_teacher(self, database):
+    def add_teacher(self):
         """
         Adds new teacher to school.
-
-        :param database: A MySQLConnector object which is connected to database.
         """
 
         query = """
@@ -38,19 +42,18 @@ class Teacher(Person):
             self.department_id
         )
         try:
-            database.execute_query(query=query, params=values)
-            database.commit()
+            Teacher.DB.execute_query(query=query, params=values)
+            Teacher.DB.commit()
         except:
             print("Failed to add teacher")
 
-    @staticmethod
-    def remove_person(database, person_code):
+    @classmethod
+    def remove_person(cls, person_code):
         """
         Removes a teacher record from database.
         If the selected teacher is enrolled in a class, the class record and
         all related class records will be removed from database.
 
-        :param database: A MySQLConnector object which is connected to database.
         :param person_code: A unique code to remove teacher.
         """
 
@@ -59,8 +62,8 @@ class Teacher(Person):
         """
 
         try:
-            database.execute_query(query=remove_query, params=(person_code,))
-            database.commit()
+            cls.DB.execute_query(query=remove_query, params=(person_code,))
+            cls.DB.commit()
             print(f"Teacher with code {person_code} removed!")
         except:
             print("Failed to remove teacher")

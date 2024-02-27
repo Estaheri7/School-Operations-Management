@@ -1,7 +1,13 @@
 from people.person import *
+from databases import MySQLConnector
+import json
 
 
 class Student(Person):
+    with open("databases/db_info.json", "r") as file:
+        db_info = json.load(file)
+    DB = MySQLConnector(**db_info)
+
     def __init__(self, name, email, password, gender, student_code):
         """
         Initializes the Student object with the provided parameters.
@@ -15,11 +21,9 @@ class Student(Person):
         super().__init__(name, email, password, gender)
         self.student_code = student_code
 
-    def add_student(self, database):
+    def add_student(self):
         """
         Adds new student to school.
-
-        :param database: A MySQLConnector object which is connected to database.
         """
 
         query = """
@@ -35,19 +39,18 @@ class Student(Person):
             self.student_code
         )
         try:
-            database.execute_query(query=query, params=values)
-            database.commit()
+            Student.DB.execute_query(query=query, params=values)
+            Student.DB.commit()
         except:
             print("Failed to add student")
 
-    @staticmethod
-    def remove_person(database, person_code):
+    @classmethod
+    def remove_person(cls, person_code):
         """
         Removes a student record from database.
         If a selected student is enrolled in a class, their record will be removed from
         the student_classes table.
 
-        :param database: A MySQLConnector object which is connected to database.
         :param person_code: A unique code to remove student.
         """
 
@@ -56,18 +59,17 @@ class Student(Person):
         """
 
         try:
-            database.execute_query(query=remove_query, params=(person_code,))
-            database.commit()
+            cls.DB.execute_query(query=remove_query, params=(person_code,))
+            cls.DB.commit()
             print(f"Student with code {person_code} removed!")
         except:
             print("Failed to remove Student")
 
-    @staticmethod
-    def enroll(database, student_code, class_code):
+    @classmethod
+    def enroll(cls, student_code, class_code):
         """
         Enrolls a class for given student_code.
 
-        :param database: A MySQLConnector object which is connected to database.
         :param student_code: given student to enroll.
         :param class_code:  given class for enroll.
         """
@@ -76,10 +78,10 @@ class Student(Person):
         INSERT INTO student_classes(student_code, class_code)
         VALUES (%s, %s)
         """
-        
+
         try:
-            database.execute_query(query=enroll_query, params=(student_code, class_code))
-            database.commit()
+            cls.DB.execute_query(query=enroll_query, params=(student_code, class_code))
+            cls.DB.commit()
             print("Enrolled to class successfully!")
         except:
             print("Failed to enroll class")
