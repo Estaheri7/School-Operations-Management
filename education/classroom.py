@@ -42,6 +42,7 @@ class Classroom:
     def remove_classroom(database, class_code):
         """
         Removes a record of classroom from database.
+        Records for enrolled students in this class will be removed from student_classes table.
 
         :param database: A MySQLConnector object which is connected to database.
         :param class_code: A unique code selected to remove classroom.

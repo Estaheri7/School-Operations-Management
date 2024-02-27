@@ -32,6 +32,8 @@ class Course:
     def remove_course(database, course_code):
         """
         Removes a course record from database.
+        If selected course is in a classroom, Its classroom will be deleted
+        and records from student_classes for that class will be removed.
 
         :param database: A MySQLConnector object which is connected to database.
         :param course_code: A unique code to remove a course.
