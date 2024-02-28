@@ -54,3 +54,26 @@ class Course:
             print(f"Course with code {course_code} removed!")
         except:
             print("Failed to remove course!")
+
+    @classmethod
+    def update_course(cls, course_code, new_values):
+        """
+        Updates records for course by given parameters.
+
+        :param course_code: The course code identifying the course to be updated.
+        :param new_values: A tuple containing the new values for the classroom attributes
+                           in the following order: (name, current_enrollment, course_code, teacher_code).
+        """
+        
+        update_query = f"""
+        UPDATE courses
+        SET name = %s, capacity = %s
+        WHERE course_code = {course_code}
+        """
+
+        try:
+            cls.DB.execute_query(query=update_query, params=new_values)
+            cls.DB.commit()
+            print(f"Records updated for course with code {course_code}")
+        except:
+            print("Failed to update course")
