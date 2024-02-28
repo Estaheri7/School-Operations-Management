@@ -72,6 +72,10 @@ class Student(Person):
         :param class_code:  given class for enroll.
         """
 
+        if self.is_enrolled(self.student_code, class_code):
+            print("This student already enrolled this class!")
+            return
+
         enroll_query = """
         INSERT INTO student_classes(student_code, class_code)
         VALUES (%s, %s)
@@ -83,4 +87,13 @@ class Student(Person):
             print("Enrolled to class successfully!")
         except:
             print("Failed to enroll class")
-    
+
+    @classmethod
+    def is_enrolled(cls, student_code, class_code):
+        search_query = """
+        SELECT student_class_id FROM student_classes
+        WHERE student_code = %s AND class_code = %s
+        """
+
+        result = cls.DB.execute_query(query=search_query, params=(student_code, class_code))
+        return result
