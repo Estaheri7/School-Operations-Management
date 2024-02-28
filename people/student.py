@@ -65,12 +65,10 @@ class Student(Person):
         except:
             print("Failed to remove Student")
 
-    @classmethod
-    def enroll(cls, student_code, class_code):
+    def enroll(self, class_code):
         """
         Enrolls a class for given student_code.
 
-        :param student_code: given student to enroll.
         :param class_code:  given class for enroll.
         """
 
@@ -80,8 +78,9 @@ class Student(Person):
         """
 
         try:
-            cls.DB.execute_query(query=enroll_query, params=(student_code, class_code))
-            cls.DB.commit()
+            Student.DB.execute_query(query=enroll_query, params=(self.student_code, class_code))
+            Student.DB.commit()
             print("Enrolled to class successfully!")
         except:
             print("Failed to enroll class")
+    
