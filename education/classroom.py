@@ -63,3 +63,26 @@ class Classroom:
             print(f"Classroom with code {class_code} removed!")
         except:
             print("Failed to delete classroom!")
+
+    @classmethod
+    def update_classroom(cls, class_code, new_values):
+        """
+        Updates records for classroom by given parameters.
+
+        :param class_code: The class code identifying the classroom to be updated.
+        :param new_values: A tuple containing the new values for the classroom attributes
+                           in the following order: (name, current_enrollment, course_code, teacher_code).
+        """
+
+        update_query = f"""
+        UPDATE classrooms
+        SET name = %s, current_enrollment = %s, course_code = %s, teacher_code = %s
+        WHERE class_code = {class_code}
+        """
+
+        try:
+            cls.DB.execute_query(query=update_query, params=new_values)
+            cls.DB.commit()
+            print(f"Records updated for classroom with code {class_code}")
+        except:
+            print("Failed to update records")
