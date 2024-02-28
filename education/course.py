@@ -61,8 +61,8 @@ class Course:
         Updates records for course by given parameters.
 
         :param course_code: The course code identifying the course to be updated.
-        :param new_values: A tuple containing the new values for the classroom attributes
-                           in the following order: (name, current_enrollment, course_code, teacher_code).
+        :param new_values: A tuple containing the new values for the course attributes
+                           in the following order: (name, capacity).
         """
         
         update_query = f"""
