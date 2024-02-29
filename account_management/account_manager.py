@@ -9,10 +9,22 @@ class AccountManager:
 
     def is_registered(self, person, person_code):
         person_type = type(person).__name__.lower()
+
         search_query = f"""
         SELECT * FROM {person_type + "s"}
         WHERE email = %s OR {person_type}_code = %s
         """
 
         result = self.database.execute_query(query=search_query, params=(person.email, person_code))
+        return result
+
+    def can_login(self, person):
+        person_type = type(person).__name__.lower()
+
+        search_query = f"""
+        SELECT * FROM {person_type + "s"}
+        WHERE email = %s AND password = %s
+        """
+
+        result = self.database.execute_query(query=search_query, params=(person.email, person.password))
         return result
