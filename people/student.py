@@ -18,6 +18,8 @@ class Student(Person):
     def add_student(self):
         """
         Adds new student to school.
+
+        :raise Exception: If student cannot be added.
         """
 
         query = """
@@ -35,8 +37,9 @@ class Student(Person):
         try:
             Student.DB.execute_query(query=query, params=values)
             Student.DB.commit()
-        except:
-            print("Failed to add student")
+            print("Student added successfully!")
+        except Exception as e:
+            raise e
 
     @classmethod
     def remove_person(cls, person_code):
@@ -92,5 +95,5 @@ class Student(Person):
             result = cls.DB.execute_query(query=search_query, params=(student_code, class_code))
             return result
         except:
-            print("Something went wrong while enrolling.")
+            print("Something went wrong when enrolling.")
             return None

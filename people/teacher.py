@@ -20,6 +20,8 @@ class Teacher(Person):
     def add_teacher(self):
         """
         Adds new teacher to school.
+
+        :raise Exception: If teacher cannot be added.
         """
 
         query = """
@@ -38,8 +40,9 @@ class Teacher(Person):
         try:
             Teacher.DB.execute_query(query=query, params=values)
             Teacher.DB.commit()
-        except:
-            print("Failed to add teacher")
+            print("Teacher added successfully!")
+        except Exception as e:
+            raise e
 
     @classmethod
     def remove_person(cls, person_code):

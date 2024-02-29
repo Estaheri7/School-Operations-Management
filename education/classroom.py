@@ -26,6 +26,8 @@ class Classroom:
     def add_classroom(self):
         """
         Adds new classroom to school.
+
+        :raise Exception: If classroom cannot be added.
         """
         add_query = """
             INSERT INTO classrooms(name, current_enrollment, class_code, course_code, teacher_code)
@@ -41,8 +43,9 @@ class Classroom:
         try:
             Classroom.DB.execute_query(query=add_query, params=values)
             Classroom.DB.commit()
-        except:
-            print("Failed to add classroom")
+            print("Classroom added successfully!")
+        except Exception as e:
+            raise e
 
     @classmethod
     def remove_classroom(cls, class_code):

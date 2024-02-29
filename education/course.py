@@ -22,6 +22,8 @@ class Course:
     def add_course(self):
         """
         Adds new course to school.
+
+        :raise Exception: If course cannot be added.
         """
         query = """
             INSERT INTO courses(name, course_code, capacity)
@@ -31,8 +33,9 @@ class Course:
         try:
             Course.DB.execute_query(query=query, params=values)
             Course.DB.commit()
-        except:
-            print("Failed to add course")
+            print("Course added successfully!")
+        except Exception as e:
+            raise e
 
     @classmethod
     def remove_course(cls, course_code):
