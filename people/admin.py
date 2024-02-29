@@ -34,5 +34,6 @@ class Admin(Person):
         try:
             Admin.DB.execute_query(query=add_query, params=values)
             Admin.DB.commit()
+            print("Admin added successfully!")
         except Exception as e:
             raise e
