@@ -1,0 +1,16 @@
+[
+  {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "password123",
+    "gender": "Male",
+    "student_code": 1001
+  },
+  {
+    "name": "Mack Smith",
+    "email": "mack.smith@example.com",
+    "password": "password456",
+    "gender": "Male",
+    "student_code": 1002
+  }
+]
