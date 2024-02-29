@@ -99,3 +99,4 @@ class Student(Person):
             return result
         except:
             print("Something went wrong while enrolling.")
+            return None
