@@ -7,6 +7,7 @@ tables = {
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     gender VARCHAR(255),
+    admin_code INT NOT NULL UNIQUE, 
     PRIMARY KEY (admin_id)
     );
     """,
