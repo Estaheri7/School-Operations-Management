@@ -1,13 +1,7 @@
 from people.person import *
-from databases import MySQLConnector
-import json
 
 
 class Teacher(Person):
-    with open("databases/db_info.json", "r") as file:
-        db_info = json.load(file)
-    DB = MySQLConnector(**db_info)
-
     def __init__(self, name, email, password, gender, teacher_code, department_id):
         """
         Initializes the Teacher object with the provided parameters.
