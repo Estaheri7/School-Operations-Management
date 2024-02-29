@@ -3,12 +3,14 @@
     "name": "Admin1",
     "email": "admin1@example.com",
     "password": "adminpass123",
-    "gender": "Male"
+    "gender": "Male",
+    "admin_code": 1001
   },
   {
     "name": "Admin2",
     "email": "admin2@example.com",
     "password": "adminpass456",
-    "gender": "Female"
+    "gender": "Female",
+    "admin_code": 1002
   }
 ]
