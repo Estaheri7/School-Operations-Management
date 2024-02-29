@@ -44,5 +44,5 @@ def initialize_data(classrooms, courses, teachers, students, admins):
         student.add_student()
 
     for a in admins:
-        admin = Admin(a["name"], a["email"], a["password"], a["gender"])
+        admin = Admin(a["name"], a["email"], a["password"], a["gender"], a["admin_code"])
         admin.add_admin()
