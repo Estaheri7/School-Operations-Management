@@ -11,7 +11,7 @@ class AccountManager:
         """
         Checks if the person is already registered in the system.
 
-        :param person: An object representing the person (e.g., Student or Teacher).
+        :param person: An object representing the person (e.g., Student or Teacher or Admin).
         :param person_code: The unique identifier (code) of the person.
 
         :return: True if the person is registered, False otherwise.
@@ -27,21 +27,21 @@ class AccountManager:
         result = self.database.execute_query(query=search_query, params=(person.email, person_code))
         return result
 
-    def can_login(self, person):
+    def can_login(self, person, email, password):
         """
         Checks if the person can log in with the provided credentials.
 
-        :param person: An object representing the person (e.g., Student or Teacher).
+        :param person: Type of person (e.g., Student or Teacher or Admin)
+        :param email: A unique email for each person.
+        :param password: password for given email.
 
         :return: True if login is successful, False otherwise.
         """
 
-        person_type = type(person).__name__.lower()
-
         search_query = f"""
-        SELECT * FROM {person_type + "s"}
+        SELECT * FROM {person + "s"}
         WHERE email = %s AND password = %s
         """
 
-        result = self.database.execute_query(query=search_query, params=(person.email, person.password))
+        result = self.database.execute_query(query=search_query, params=(email, password))
         return result
