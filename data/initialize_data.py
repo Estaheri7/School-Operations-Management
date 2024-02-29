@@ -1,9 +1,9 @@
 import json
 from education import Classroom, Course
-from people import Teacher
+from people import Teacher, Student, Admin
 
 
-def initialize_data(database, classrooms, courses, teachers):
+def initialize_data(classrooms, courses, teachers, students, admins):
     with open(classrooms, "r") as file:
         classrooms = json.load(file)
 
@@ -12,6 +12,12 @@ def initialize_data(database, classrooms, courses, teachers):
 
     with open(teachers, "r") as file:
         teachers = json.load(file)
+
+    with open(students, "r") as file:
+        students = json.load(file)
+
+    with open(admins, "r") as file:
+        admins = json.load(file)
 
     for t in teachers:
         teacher = Teacher(
@@ -33,3 +39,10 @@ def initialize_data(database, classrooms, courses, teachers):
                               r["class_code"], r["course_code"], r["teacher_code"])
         classroom.add_classroom()
 
+    for s in students:
+        student = Student(s["name"], s["email"], s["password"], s["gender"], s["student_code"])
+        student.add_student()
+
+    for a in admins:
+        admin = Admin(a["name"], a["email"], a["password"], a["gender"])
+        admin.add_admin()
