@@ -40,3 +40,20 @@ class Admin(Person):
             print("Admin added successfully!")
         except Exception as e:
             raise e
+
+    @staticmethod
+    def enter_attrs():
+        """
+        Prompt the user to enter attributes for creating a new Admin object.
+
+        :return: A tuple containing the entered attributes in the following order: (name, email, password, gender,
+                 admin_code). If gender is not provided (blank input), it will be returned as None.
+        """
+        name = input("Enter name: ")
+        email = input("Enter your email: ")
+        password = input("Enter your password: ")
+        gender = input("Enter your gender or blank: ")
+        if not gender.strip():
+            gender = None
+        admin_code = input("Enter your unique code: ")
+        return name, email, password, gender, admin_code
