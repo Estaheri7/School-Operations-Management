@@ -94,6 +94,8 @@ class Student(Person):
         SELECT student_class_id FROM student_classes
         WHERE student_code = %s AND class_code = %s
         """
-
-        result = cls.DB.execute_query(query=search_query, params=(student_code, class_code))
-        return result
+        try:
+            result = cls.DB.execute_query(query=search_query, params=(student_code, class_code))
+            return result
+        except:
+            print("Something went wrong while enrolling.")
