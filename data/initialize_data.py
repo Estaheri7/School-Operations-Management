@@ -22,14 +22,14 @@ def initialize_data(database, classrooms, courses, teachers):
             t["teacher_code"],
             t["department_id"]
         )
-        teacher.add_teacher(database)
+        teacher.add_teacher()
 
     for c in courses:
         course = Course(c["name"], c["course_code"], c["capacity"])
-        course.add_course(database)
+        course.add_course()
 
     for r in classrooms:
         classroom = Classroom(r["name"], r["current_enrollment"],
                               r["class_code"], r["course_code"], r["teacher_code"])
-        classroom.add_classroom(database)
+        classroom.add_classroom()
 
