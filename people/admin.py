@@ -45,6 +45,24 @@ class Admin(Person):
 
     @classmethod
     def do_object(cls, obj):
+        """
+        Perform actions related to different objects (students, teachers, etc.) based on the provided object type.
+
+        :param obj: The type of object on which actions are to be performed (e.g., "student", "teacher").
+
+        Prompts the user to specify an action (add, remove, update) to perform on the specified object type.
+        Depending on the object type and action chosen:
+        - Calls the corresponding static method to perform the action.
+        - For example, if the object type is "student" and the action is "add", it calls the do_student method
+          to add a new student.
+
+        Valid object types:
+        - "student": Perform actions related to students.
+        - "teacher": Perform actions related to teachers.
+        - "classroom": Perform actions related to classrooms.
+        - "course": Perform actions related to courses.
+        """
+        
         method = input("Add/Remove/Update -> ").lower()
         if obj == "student":
             cls.do_student(method)
