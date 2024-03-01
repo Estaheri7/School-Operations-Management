@@ -58,6 +58,26 @@ class Admin(Person):
 
     @staticmethod
     def do_student(method):
+        """
+        Perform actions related to students based on the provided method.
+
+        :param method: The action to perform on students (add, remove, update).
+
+        For the 'add' method:
+        - Prompts the user to enter data for new students either through input or by providing a CSV file path.
+        - Calls the Student.get_attrs method to create Student objects from the entered data.
+        - Adds each student to the database using the add_student method.
+
+        For the 'remove' method:
+        - Prompts the user to enter the student code to remove a student.
+        - Calls the Student.remove_person method to remove the student from the database.
+
+        For the 'update' method:
+        - Prompts the user to enter the student code and new name/password to update student records.
+        - Calls the Student.update_student method to update the student's name/password in the database.
+
+        """
+
         if method == "add":
             file = input("Enter data through input (press enter) or write a csv file path: ")
             if not file.strip():
