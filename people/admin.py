@@ -57,3 +57,12 @@ class Admin(Person):
             gender = None
         admin_code = input("Enter your unique code: ")
         return name, email, password, gender, admin_code
+
+    @staticmethod
+    def help():
+        print("Welcome!\n")
+        print("1 -> Add/Remove/Update student")
+        print("2 -> Add/Remove/Update teacher")
+        print("3 -> Add/Remove/Update classroom")
+        print("4 -> Add/Remove/Update course")
+        print("0 -> logout")
