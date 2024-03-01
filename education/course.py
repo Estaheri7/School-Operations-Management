@@ -1,4 +1,5 @@
 from databases import MySQLConnector
+import pandas as pd
 import json
 
 
@@ -80,3 +81,34 @@ class Course:
             print(f"Records updated for course with code {course_code}")
         except:
             print("Failed to update course")
+
+    @staticmethod
+    def get_attrs(file=None):
+        """
+        Generate a list of Course objects based on user input or data from a CSV file.
+
+        :param file: Optional. Path to a CSV file containing course data. If provided, course data will be
+                     read from the file. If not provided, the user will be prompted to enter data for a single
+                     course.
+
+        :return: A list of Course objects generated from the provided data.
+        """
+        
+        if file:
+            courses = pd.read_csv(file)
+            all_courses = []
+            courses["course_code"] = courses["course_code"].astype(int)
+            courses["capacity"] = courses["capacity"].astype(int)
+            for _, course_data in courses.iterrows():
+                new_course = Course(
+                    course_data["name"],
+                    course_data["course_code"],
+                    course_data["capacity"],
+                )
+                all_courses.append(new_course)
+            return all_courses
+        name = input("Enter name: ")
+        course_code = input("Enter course code: ")
+        capacity = int(input("Enter capacity: "))
+        course = Course(name, course_code, capacity)
+        return [course]
