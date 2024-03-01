@@ -1,4 +1,5 @@
 from people.person import *
+from people.student import Student
 
 
 class Admin(Person):
@@ -40,6 +41,34 @@ class Admin(Person):
             print("Admin added successfully!")
         except Exception as e:
             raise e
+
+    @staticmethod
+    def do_person(person):
+        method = input("Add/Remove/Update")
+        if person == "student":
+            Admin.do_student(method)
+        elif person == "teacher":
+            pass
+        elif person == "classroom":
+            pass
+        elif person == "course":
+            pass
+        else:
+            print("Invalid object!")
+
+    @staticmethod
+    def do_student(method):
+        if method == "add":
+            file = input("Enter path of csv file or press enter to add a student: ")
+            if not file.strip():
+                file = None
+            students = Student.get_attrs(file)
+            for student in students:
+                student.add_student()
+        elif method == "remove":
+            pass
+        elif method == "update":
+            pass
 
     @staticmethod
     def enter_attrs():
