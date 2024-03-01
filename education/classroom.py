@@ -1,4 +1,5 @@
 from databases import MySQLConnector
+import pandas as pd
 import json
 
 
@@ -89,3 +90,31 @@ class Classroom:
             print(f"Records updated for classroom with code {class_code}")
         except:
             print("Failed to update records")
+
+    @staticmethod
+    def get_attrs(file=None):
+        if file:
+            classrooms = pd.read_csv(file)
+            all_classrooms = []
+            classrooms["current_enrollment"] = classrooms["current_enrollment"].astype(int)
+            classrooms["class_code"] = classrooms["class_code"].astype(int)
+            classrooms["course_code"] = classrooms["course_code"].astype(int)
+            classrooms["teacher_code"] = classrooms["teacher_code"].astype(int)
+            for _, classroom_data in classrooms.iterrows():
+                new_classroom = Classroom(
+                    classroom_data["name"],
+                    classroom_data["current_enrollment"],
+                    classroom_data["class_code"],
+                    classroom_data["course_code"],
+                    classroom_data["teacher_code"]
+                )
+                all_classrooms.append(new_classroom)
+            return all_classrooms
+
+        class_name = input("Enter name: ")
+        current_enrollment = int(input("Enter current enrollment: "))
+        class_code = input("Enter class code: ")
+        course_code = input("Enter course code: ")
+        teacher_code = input("Enter teacher code: ")
+        classroom = Classroom(class_name, current_enrollment, class_code, course_code, teacher_code)
+        return [classroom]
