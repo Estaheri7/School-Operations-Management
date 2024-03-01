@@ -78,12 +78,10 @@ class Teacher(Person):
         update_query = f"""
         UPDATE teachers
         SET name = %s, password = %s, department_id = %s
-        WHERE student_code = {teacher_code}
+        WHERE teacher_code = {teacher_code}
         """
 
-        try:
-            cls.DB.execute_query(query=update_query, params=new_values)
-            cls.DB.commit()
-            print(f"Records updated for teacher with code {teacher_code}")
-        except:
-            print("Failed to update records")
+        cls.DB.execute_query(query=update_query, params=new_values)
+        cls.DB.commit()
+        print(f"Records updated for teacher with code {teacher_code}")
+        print("Failed to update records")
