@@ -1,7 +1,7 @@
 from people.person import *
 from people.student import Student
 from people.teacher import Teacher
-from education import Classroom
+from education import Classroom, Course
 
 
 class Admin(Person):
@@ -200,7 +200,19 @@ class Admin(Person):
 
     @staticmethod
     def do_course(method):
-        pass
+        if method == "add":
+            file = input("Enter data through input (press enter) or write a csv file path: ")
+            if not file.strip():
+                file = None
+            courses = Course.get_attrs(file)
+            for course in courses:
+                course.add_course()
+        elif method == "remove":
+            pass
+        elif method == "update":
+            pass
+        else:
+            print("Invalid method!")
 
     @staticmethod
     def enter_attrs():
