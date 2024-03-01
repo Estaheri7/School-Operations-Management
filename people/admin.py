@@ -157,6 +157,26 @@ class Admin(Person):
 
     @staticmethod
     def do_classroom(method):
+        """
+        Perform actions related to classrooms based on the provided method.
+
+        :param method: The action to perform on classrooms (add, remove, update).
+
+        For the 'add' method:
+        - Prompts the user to enter data for new classrooms either through input or by providing a CSV file path.
+        - Calls the Classroom.get_attrs method to create Classroom objects from the entered data.
+        - Adds each classroom to the database using the add_classroom method.
+
+        For the 'remove' method:
+        - Prompts the user to enter the classroom code to remove a classroom.
+        - Calls the Classroom.remove_classroom method to remove the classroom from the database.
+
+        For the 'update' method:
+        - Prompts the user to enter the classroom code, new name, current enrollment, new course code,
+          and new teacher code to update classroom records.
+        - Calls the Classroom.update_classroom method to update the classroom's attributes in the database.
+        """
+
         if method == "add":
             file = input("Enter data through input (press enter) or write a csv file path: ")
             if not file.strip():
