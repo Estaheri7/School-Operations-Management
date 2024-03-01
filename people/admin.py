@@ -93,6 +93,19 @@ class Admin(Person):
             new_name = input("Enter new name: ")
             new_password = input("Enter new password: ")
             Student.update_student(student_code, (new_name, new_password))
+        else:
+            print("Invalid method")
+
+    @staticmethod
+    def do_teacher(method):
+        if method == "add":
+            pass
+        elif method == "remove":
+            pass
+        elif method == "update":
+            pass
+        else:
+            print("Invalid method")
 
     @staticmethod
     def enter_attrs():
