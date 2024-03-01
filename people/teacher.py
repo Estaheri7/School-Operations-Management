@@ -69,7 +69,7 @@ class Teacher(Person):
     @classmethod
     def update_teacher(cls, teacher_code, new_values):
         """
-        Updates records for classroom by given parameters.
+        Updates records for teacher by given parameters.
 
         :param teacher_code: The teacher code identifying the teacher to be updated.
         :param new_values: A tuple containing the new values for the teacher attributes
@@ -91,6 +91,27 @@ class Teacher(Person):
 
     @staticmethod
     def get_attrs(file=None):
+        """
+        Retrieve attributes for creating Teacher objects.
+
+        :param file: Optional. Path to a CSV file containing teacher data. If provided,
+                     attributes will be retrieved from the CSV file. If not provided,
+                     attributes will be prompted from user input.
+        :return: A list of Teacher objects initialized with the retrieved attributes.
+
+        If 'file' is provided:
+        - Reads the CSV file and extracts teacher attributes from it.
+        - Converts 'teacher_code' and 'department_id' columns to integers.
+        - Initializes Teacher objects with the retrieved attributes and adds them to a list.
+        - Returns the list of Teacher objects.
+
+        If 'file' is not provided:
+        - Prompts the user to enter attributes for creating a new Teacher object.
+        - If 'gender' is not provided (blank input), it will be set to None.
+        - Converts 'teacher_code' and 'department_id' entered by the user to integers.
+        - Initializes a new Teacher object with the entered attributes and returns it as a single-element list.
+        """
+
         if file:
             teachers = pd.read_csv(file)
             all_teachers = []
