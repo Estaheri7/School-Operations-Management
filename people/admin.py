@@ -76,7 +76,6 @@ class Admin(Person):
         For the 'update' method:
         - Prompts the user to enter the student code and new name/password to update student records.
         - Calls the Student.update_student method to update the student's name/password in the database.
-
         """
 
         if method == "add":
@@ -99,6 +98,24 @@ class Admin(Person):
 
     @staticmethod
     def do_teacher(method):
+        """
+        Perform actions related to teachers based on the provided method.
+
+        :param method: The action to perform on teachers (add, remove, update).
+
+        For the 'add' method:
+        - Prompts the user to enter data for new teachers either through input or by providing a CSV file path.
+        - Calls the Teacher.get_attrs method to create Teacher objects from the entered data.
+        - Adds each teacher to the database using the add_teacher method.
+
+        For the 'remove' method:
+        - Prompts the user to enter the teacher code to remove a teacher.
+        - Calls the Teacher.remove_person method to remove the teacher from the database.
+
+        For the 'update' method:
+        - Prompts the user to enter the teacher code, new name/password, and new department ID to update teacher records.
+        - Calls the Teacher.update_teacher method to update the teacher's name/password/department in the database.
+        """
         if method == "add":
             file = input("Enter data through input (press enter) or write a csv file path: ")
             if not file.strip():
