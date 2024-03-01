@@ -107,7 +107,8 @@ class Admin(Person):
             for teacher in teachers:
                 teacher.add_teacher()
         elif method == "remove":
-            pass
+            teacher_code = input("Enter teacher code to remove teacher: ")
+            Teacher.remove_person(teacher_code)
         elif method == "update":
             teacher_code = int(input("Enter teacher code to update records: "))
             new_name = input("Enter new name: ")
