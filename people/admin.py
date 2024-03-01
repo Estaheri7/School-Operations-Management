@@ -200,6 +200,25 @@ class Admin(Person):
 
     @staticmethod
     def do_course(method):
+        """
+        Perform actions related to courses based on the provided method.
+
+        :param method: The action to perform on courses (add, remove, update).
+
+        For the 'add' method:
+        - Prompts the user to enter data for new courses either through input or by providing a CSV file path.
+        - Calls the Course.get_attrs method to create Course objects from the entered data.
+        - Adds each course to the database using the add_course method.
+
+        For the 'remove' method:
+        - Prompts the user to enter the course code to remove a course.
+        - Calls the Course.remove_course method to remove the course from the database.
+
+        For the 'update' method:
+        - Prompts the user to enter the course code, new name, and new capacity to update course records.
+        - Calls the Course.update_course method to update the course's attributes in the database.
+        """
+
         if method == "add":
             file = input("Enter data through input (press enter) or write a csv file path: ")
             if not file.strip():
@@ -208,9 +227,13 @@ class Admin(Person):
             for course in courses:
                 course.add_course()
         elif method == "remove":
-            pass
+            course_code = input("Enter course code to remove course: ")
+            Course.remove_course(course_code)
         elif method == "update":
-            pass
+            course_code = input("Enter course code to update records: ")
+            new_name = input("Enter new name: ")
+            new_capacity = input("Enter new capacity: ")
+            Course.update_course(course_code, (new_name, new_capacity))
         else:
             print("Invalid method!")
 
