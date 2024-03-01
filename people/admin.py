@@ -100,7 +100,12 @@ class Admin(Person):
     @staticmethod
     def do_teacher(method):
         if method == "add":
-            pass
+            file = input("Enter data through input (press enter) or write a csv file path: ")
+            if not file.strip():
+                file = None
+            teachers = Teacher.get_attrs(file)
+            for teacher in teachers:
+                teacher.add_teacher()
         elif method == "remove":
             pass
         elif method == "update":
