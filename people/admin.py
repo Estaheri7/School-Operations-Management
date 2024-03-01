@@ -2,6 +2,7 @@ from people.person import *
 from people.student import Student
 from people.teacher import Teacher
 from education import Classroom, Course
+from account_management import AccountManager
 
 
 class Admin(Person):
@@ -247,6 +248,8 @@ class Admin(Person):
         """
         name = input("Enter name: ")
         email = input("Enter your email: ")
+        while not AccountManager.is_valid_email(email):
+            email = input("Invalid email! try another: ")
         password = input("Enter your password: ")
         gender = input("Enter your gender or blank: ")
         if not gender.strip():

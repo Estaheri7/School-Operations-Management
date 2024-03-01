@@ -1,4 +1,5 @@
 from people.person import *
+from account_management import AccountManager
 import pandas as pd
 
 
@@ -118,6 +119,9 @@ class Teacher(Person):
             teachers["teacher_code"] = teachers["teacher_code"].astype(int)
             teachers["department_id"] = teachers["department_id"].astype(int)
             for _, teacher_data in teachers.iterrows():
+                if not AccountManager.is_valid_email(teacher_data["email"]):
+                    print(f"Invalid email for {teacher_data['email']}\nSkipped...")
+                    continue
                 new_teacher = Teacher(
                     teacher_data["name"],
                     teacher_data["email"],
@@ -130,6 +134,8 @@ class Teacher(Person):
             return all_teachers
         name = input("Enter name: ")
         email = input("Enter email: ")
+        while not AccountManager.is_valid_email(email):
+            email = input("Invalid email! try another: ")
         password = input("Enter password: ")
         gender = input("Enter gender or enter to skip: ")
         if not gender.strip():
