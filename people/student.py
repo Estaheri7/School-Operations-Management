@@ -66,7 +66,7 @@ class Student(Person):
     @classmethod
     def update_student(cls, student_code, new_values):
         """
-        Updates records for classroom by given parameters.
+        Updates records for teacher by given parameters.
 
         :param student_code: The student code identifying the student to be updated.
         :param new_values: A tuple containing the new values for the student attributes
@@ -111,6 +111,18 @@ class Student(Person):
 
     @classmethod
     def is_enrolled(cls, student_code, class_code):
+        """
+        Check if a student with the given student code is enrolled in a class with the given class code.
+
+        :param student_code: The unique code identifying the student.
+        :param class_code: The unique code identifying the class.
+        :return: True if the student is enrolled in the class, False otherwise.
+
+        Executes a SQL query to check if there is a record in the student_classes table
+        corresponding to the provided student code and class code. Returns True if such
+        a record exists (indicating the student is enrolled in the class), and False otherwise.
+        """
+
         search_query = """
         SELECT student_class_id FROM student_classes
         WHERE student_code = %s AND class_code = %s
@@ -124,6 +136,27 @@ class Student(Person):
 
     @staticmethod
     def get_attrs(file=None):
+        """
+        Retrieve attributes for creating Student objects.
+
+        :param file: Optional. Path to a CSV file containing student data. If provided,
+                     attributes will be retrieved from the CSV file. If not provided,
+                     attributes will be prompted from user input.
+        :return: A list of Student objects initialized with the retrieved attributes.
+
+        If 'file' is provided:
+        - Reads the CSV file and extracts student attributes from it.
+        - Converts 'student_code' column to integers.
+        - Initializes Student objects with the retrieved attributes and adds them to a list.
+        - Returns the list of Student objects.
+
+        If 'file' is not provided:
+        - Prompts the user to enter attributes for creating a new Student object.
+        - If 'gender' is not provided (blank input), it will be set to None.
+        - Converts 'student_code' entered by the user to an integer.
+        - Initializes a new Student object with the entered attributes and returns it as a single-element list.
+        """
+
         if file:
             all_students = []
             students = pd.read_csv(file)
