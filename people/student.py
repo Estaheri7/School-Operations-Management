@@ -63,6 +63,29 @@ class Student(Person):
         except:
             print("Failed to remove Student")
 
+    @classmethod
+    def update_student(cls, student_code, new_values):
+        """
+        Updates records for classroom by given parameters.
+
+        :param student_code: The student code identifying the student to be updated.
+        :param new_values: A tuple containing the new values for the student attributes
+                           in the following order: (name, password).
+        """
+
+        update_query = f"""
+        UPDATE students
+        SET name = %s, password = %s
+        WHERE student_code = {student_code}
+        """
+
+        try:
+            cls.DB.execute_query(query=update_query, params=new_values)
+            cls.DB.commit()
+            print(f"Records updated for student with code {student_code}")
+        except:
+            print("Failed to update records")
+
     def enroll(self, class_code):
         """
         Enrolls a class for given student_code.
