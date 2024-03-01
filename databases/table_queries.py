@@ -32,7 +32,7 @@ tables = {
     password VARCHAR(255) NOT NULL,
     gender VARCHAR(255),
     teacher_code INT NOT NULL UNIQUE,
-    department_id INT UNIQUE,
+    department_id INT,
     PRIMARY KEY (teacher_id)
     );
     """,
