@@ -63,7 +63,7 @@ def main() -> None:
                 elif choice == 1:
                     Admin.do_person("student")
                 elif choice == 2:
-                    pass
+                    Admin.do_person("teacher")
                 elif choice == 3:
                     pass
                 elif choice == 4:
