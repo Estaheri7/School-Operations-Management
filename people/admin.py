@@ -44,7 +44,7 @@ class Admin(Person):
 
     @staticmethod
     def do_person(person):
-        method = input("Add/Remove/Update")
+        method = input("Add/Remove/Update -> ").lower()
         if person == "student":
             Admin.do_student(method)
         elif person == "teacher":
@@ -59,16 +59,20 @@ class Admin(Person):
     @staticmethod
     def do_student(method):
         if method == "add":
-            file = input("Enter path of csv file or press enter to add a student: ")
+            file = input("Enter data through input (press enter) or write a csv file path: ")
             if not file.strip():
                 file = None
             students = Student.get_attrs(file)
             for student in students:
                 student.add_student()
         elif method == "remove":
-            pass
+            student_code = input("Enter student code to remove student: ")
+            Student.remove_person(student_code)
         elif method == "update":
-            pass
+            student_code = int(input("Enter student code to update records: "))
+            new_name = input("Enter new name: ")
+            new_password = input("Enter new password: ")
+            Student.update_student(student_code, (new_name, new_password))
 
     @staticmethod
     def enter_attrs():
