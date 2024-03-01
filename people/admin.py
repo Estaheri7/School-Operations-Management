@@ -168,7 +168,13 @@ class Admin(Person):
             class_code = input("Enter classroom code to remove classroom: ")
             Classroom.remove_classroom(class_code)
         elif method == "update":
-            pass
+            class_code = input("Enter classroom code to update records: ")
+            new_name = input("Enter new name: ")
+            current_enrollment = input("Enter current enrollment: ")
+            new_course_code = input("Enter new course code: ")
+            new_teacher_code = input("Enter new teacher code: ")
+            Classroom.update_classroom(class_code, (new_name, current_enrollment,
+                                                    new_course_code, new_teacher_code))
         else:
             print("Invalid method!")
 
