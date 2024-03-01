@@ -1,6 +1,7 @@
 from people.person import *
 from people.student import Student
 from people.teacher import Teacher
+from education import Classroom
 
 
 class Admin(Person):
@@ -62,7 +63,7 @@ class Admin(Person):
         - "classroom": Perform actions related to classrooms.
         - "course": Perform actions related to courses.
         """
-        
+
         method = input("Add/Remove/Update -> ").lower()
         if obj == "student":
             cls.do_student(method)
@@ -107,7 +108,7 @@ class Admin(Person):
             student_code = input("Enter student code to remove student: ")
             Student.remove_person(student_code)
         elif method == "update":
-            student_code = int(input("Enter student code to update records: "))
+            student_code = input("Enter student code to update records: ")
             new_name = input("Enter new name: ")
             new_password = input("Enter new password: ")
             Student.update_student(student_code, (new_name, new_password))
@@ -134,6 +135,7 @@ class Admin(Person):
         - Prompts the user to enter the teacher code, new name/password, and new department ID to update teacher records.
         - Calls the Teacher.update_teacher method to update the teacher's name/password/department in the database.
         """
+
         if method == "add":
             file = input("Enter data through input (press enter) or write a csv file path: ")
             if not file.strip():
@@ -145,7 +147,7 @@ class Admin(Person):
             teacher_code = input("Enter teacher code to remove teacher: ")
             Teacher.remove_person(teacher_code)
         elif method == "update":
-            teacher_code = int(input("Enter teacher code to update records: "))
+            teacher_code = input("Enter teacher code to update records: ")
             new_name = input("Enter new name: ")
             new_password = input("Enter new password: ")
             new_department = int(input("Enter new department ID: "))
@@ -155,7 +157,20 @@ class Admin(Person):
 
     @staticmethod
     def do_classroom(method):
-        pass
+        if method == "add":
+            file = input("Enter data through input (press enter) or write a csv file path: ")
+            if not file.strip():
+                file = None
+            classrooms = Classroom.get_attrs(file)
+            for classroom in classrooms:
+                classroom.add_classroom()
+        elif method == "remove":
+            class_code = input("Enter classroom code to remove classroom: ")
+            Classroom.remove_classroom(class_code)
+        elif method == "update":
+            pass
+        else:
+            print("Invalid method!")
 
     @staticmethod
     def do_course(method):
