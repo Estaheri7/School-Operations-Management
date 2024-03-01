@@ -76,7 +76,7 @@ class Teacher(Person):
         """
 
         update_query = f"""
-        UPDATE students
+        UPDATE teachers
         SET name = %s, password = %s, department_id = %s
         WHERE student_code = {teacher_code}
         """
