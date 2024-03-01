@@ -43,17 +43,17 @@ class Admin(Person):
         except Exception as e:
             raise e
 
-    @staticmethod
-    def do_person(person):
+    @classmethod
+    def do_object(cls, obj):
         method = input("Add/Remove/Update -> ").lower()
-        if person == "student":
-            Admin.do_student(method)
-        elif person == "teacher":
-            Admin.do_teacher(method)
-        elif person == "classroom":
-            pass
-        elif person == "course":
-            pass
+        if obj == "student":
+            cls.do_student(method)
+        elif obj == "teacher":
+            cls.do_teacher(method)
+        elif obj == "classroom":
+            cls.do_classroom(method)
+        elif obj == "course":
+            cls.do_course(method)
         else:
             print("Invalid object!")
 
@@ -134,6 +134,14 @@ class Admin(Person):
             Teacher.update_teacher(teacher_code, (new_name, new_password, new_department))
         else:
             print("Invalid method")
+
+    @staticmethod
+    def do_classroom(method):
+        pass
+
+    @staticmethod
+    def do_course(method):
+        pass
 
     @staticmethod
     def enter_attrs():
