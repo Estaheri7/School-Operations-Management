@@ -55,6 +55,21 @@ def main() -> None:
                     print("Invalid email or password!")
             else:
                 print("Invalid command!")
+            while login:
+                Admin.help()
+                choice = int(input())
+                if choice == 0:
+                    break
+                elif choice == 1:
+                    pass
+                elif choice == 2:
+                    pass
+                elif choice == 3:
+                    pass
+                elif choice == 4:
+                    pass
+                else:
+                    print("Invalid command!")
         else:
             print("Invalid command!")
 
