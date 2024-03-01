@@ -1,4 +1,5 @@
 from people.person import *
+import pandas as pd
 
 
 class Student(Person):
@@ -97,3 +98,30 @@ class Student(Person):
         except:
             print("Something went wrong when enrolling.")
             return None
+
+    @staticmethod
+    def get_attrs(file=None):
+        if file:
+            all_students = []
+            students = pd.read_csv(file)
+            students["student_code"] = students["student_code"].astype(int)
+            for _, student_data in students.iterrows():
+                new_student = Student(
+                    student_data["name"],
+                    student_data["email"],
+                    student_data["password"],
+                    student_data["gender"],
+                    student_data["student_code"]
+                )
+                all_students.append(new_student)
+            return all_students
+
+        name = input("Enter name: ")
+        email = input("Enter email: ")
+        password = input("Enter password: ")
+        gender = input("Enter gender: ")
+        if not gender.strip():
+            gender = None
+        student_code = input("Enter student code: ")
+        student = Student(name, email, password, gender, student_code)
+        return [student]
