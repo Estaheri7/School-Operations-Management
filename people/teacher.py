@@ -64,3 +64,26 @@ class Teacher(Person):
             print(f"Teacher with code {person_code} removed!")
         except:
             print("Failed to remove teacher")
+
+    @classmethod
+    def update_teacher(cls, teacher_code, new_values):
+        """
+        Updates records for classroom by given parameters.
+
+        :param teacher_code: The teacher code identifying the teacher to be updated.
+        :param new_values: A tuple containing the new values for the teacher attributes
+                           in the following order: (name, password, department_id).
+        """
+
+        update_query = f"""
+        UPDATE students
+        SET name = %s, password = %s, department_id = %s
+        WHERE student_code = {teacher_code}
+        """
+
+        try:
+            cls.DB.execute_query(query=update_query, params=new_values)
+            cls.DB.commit()
+            print(f"Records updated for teacher with code {teacher_code}")
+        except:
+            print("Failed to update records")
