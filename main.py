@@ -32,7 +32,6 @@ def main() -> None:
         elif role == "teacher":
             pass
         elif role == "admin":
-            admin = None
             if pick == 1:
                 name, email, password, gender, admin_code = Admin.enter_attrs()
                 admin = Admin(name, email, password, gender, admin_code)
@@ -48,8 +47,6 @@ def main() -> None:
                 let_login = ac.can_login(role, email, password)
                 if let_login:
                     login = True
-                    name, gender, admin_code = let_login[0][1], let_login[0][4], let_login[0][5]
-                    admin = Admin(name, email, password, gender, admin_code)
                     print("Logged in successfully!")
                 else:
                     print("Invalid email or password!")
