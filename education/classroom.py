@@ -93,6 +93,16 @@ class Classroom:
 
     @staticmethod
     def get_attrs(file=None):
+        """
+        Generates a list of Classroom objects based on user input or data from a CSV file.
+
+        :param file: Optional. Path to a CSV file containing classroom data. If provided, classroom data will be
+                     read from the file. If not provided, the user will be prompted to enter data for a single
+                     classroom.
+
+        :return: A list of Classroom objects generated from the provided data.
+        """
+
         if file:
             classrooms = pd.read_csv(file)
             all_classrooms = []
