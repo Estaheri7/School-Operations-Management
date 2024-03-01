@@ -61,7 +61,7 @@ def main() -> None:
                 if choice == 0:
                     break
                 elif choice == 1:
-                    pass
+                    Admin.do_person("student")
                 elif choice == 2:
                     pass
                 elif choice == 3:
