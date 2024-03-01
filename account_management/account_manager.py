@@ -1,3 +1,6 @@
+import re
+
+
 class AccountManager:
     def __init__(self, database):
         """
@@ -45,3 +48,19 @@ class AccountManager:
 
         result = self.database.execute_query(query=search_query, params=(email, password))
         return result
+
+    @staticmethod
+    def is_valid_email(email):
+        """
+        Validates the format of an email address.
+
+        :param email: The email address to be validated.
+        :return: True if the email address is valid, False otherwise.
+        """
+
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+        if re.match(email_pattern, email):
+            return True
+        else:
+            return False
