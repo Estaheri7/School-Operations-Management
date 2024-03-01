@@ -1,4 +1,5 @@
 from people.person import *
+import pandas as pd
 
 
 class Teacher(Person):
@@ -80,10 +81,39 @@ class Teacher(Person):
         SET name = %s, password = %s, department_id = %s
         WHERE teacher_code = {teacher_code}
         """
-        
+
         try:
             cls.DB.execute_query(query=update_query, params=new_values)
             cls.DB.commit()
             print(f"Records updated for teacher with code {teacher_code}")
         except:
             print("Failed to update records")
+
+    @staticmethod
+    def get_attrs(file=None):
+        if file:
+            teachers = pd.read_csv(file)
+            all_teachers = []
+            teachers["teacher_code"] = teachers["teacher_code"].astype(int)
+            teachers["department_id"] = teachers["department_id"].astype(int)
+            for _, teacher_data in teachers.iterrows():
+                new_teacher = Teacher(
+                    teacher_data["name"],
+                    teacher_data["email"],
+                    teacher_data["password"],
+                    teacher_data["gender"],
+                    teacher_data["teacher_code"],
+                    teacher_data["department_id"]
+                )
+                all_teachers.append(new_teacher)
+            return all_teachers
+        name = input("Enter name: ")
+        email = input("Enter email: ")
+        password = input("Enter password: ")
+        gender = input("Enter gender or enter to skip: ")
+        if not gender.strip():
+            gender = None
+        teacher_code = int(input("Enter teacher code: "))
+        department_id = int(input("Enter department ID: "))
+        teacher = Teacher(name, email, password, gender, teacher_code, department_id)
+        return [teacher]
