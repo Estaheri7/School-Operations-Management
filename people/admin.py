@@ -1,5 +1,6 @@
 from people.person import *
 from people.student import Student
+from people.teacher import Teacher
 
 
 class Admin(Person):
@@ -48,7 +49,7 @@ class Admin(Person):
         if person == "student":
             Admin.do_student(method)
         elif person == "teacher":
-            pass
+            Admin.do_teacher(method)
         elif person == "classroom":
             pass
         elif person == "course":
@@ -103,7 +104,11 @@ class Admin(Person):
         elif method == "remove":
             pass
         elif method == "update":
-            pass
+            teacher_code = int(input("Enter teacher code to update records: "))
+            new_name = input("Enter new name: ")
+            new_password = input("Enter new password: ")
+            new_department = int(input("Enter new department ID: "))
+            Teacher.update_teacher(teacher_code, (new_name, new_password, new_department))
         else:
             print("Invalid method")
 
