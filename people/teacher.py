@@ -11,7 +11,7 @@ class Teacher(Person):
         :param password: Password for email address.
         :param gender: Gender of added teacher.
         :param teacher_code: A unique code for each teacher.
-        :param department_id: A unique ID for each teacher department.
+        :param department_id: An ID for teacher department.
         """
         super().__init__(name, email, password, gender)
         self.teacher_code = teacher_code
