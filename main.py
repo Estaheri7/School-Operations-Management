@@ -61,13 +61,13 @@ def main() -> None:
                 if choice == 0:
                     break
                 elif choice == 1:
-                    Admin.do_person("student")
+                    Admin.do_object("student")
                 elif choice == 2:
-                    Admin.do_person("teacher")
+                    Admin.do_object("teacher")
                 elif choice == 3:
-                    pass
+                    Admin.do_object("classroom")
                 elif choice == 4:
-                    pass
+                    Admin.do_object("course")
                 else:
                     print("Invalid command!")
         else:
