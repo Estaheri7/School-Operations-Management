@@ -28,25 +28,35 @@ def main() -> None:
         pick = int(input("Enter 1 to register or 2 to login: "))
 
         if role == "student":
+            current_student = None
             if pick == 1:
                 student = Student.get_attrs()
                 if not AM.is_registered(student[0], student[0].student_code):
                     student[0].add_student()
                     login = True
+                    current_student = student[0]
                 else:
                     print("This account is already registered!")
             elif pick == 2:
                 email = input("Enter your email: ")
                 password = input("Enter your password: ")
-                if AM.can_login(role, email, password):
+                let_login = AM.can_login(role, email, password)
+                print(let_login)
+                if let_login:
                     login = True
+                    current_student = Student(
+                        let_login[0][1],
+                        let_login[0][2],
+                        let_login[0][3],
+                        let_login[0][4],
+                        let_login[0][5]
+                    )
                     print("Logged in successfully")
                 else:
                     print("Invalid email or password!")
             else:
                 print("Invalid command!")
             while login:
-                print("done")
                 break
         elif role == "teacher":
             pass
