@@ -110,6 +110,22 @@ class Student(Person):
         except:
             print("Failed to enroll class")
 
+    def delete_enrollment(self, class_code):
+        if not self.is_enrolled(self.student_code, class_code):
+            print("enrollment not found!")
+            return
+
+        delete_query = f"""
+        DELETE FROM student_classes
+        WHERE class_code = {class_code} 
+        """
+        try:
+            Student.DB.execute_query(query=delete_query)
+            Student.DB.commit()
+            print("Enrollment deleted successfully")
+        except:
+            print("Failed to delete enrollment!")
+
     @classmethod
     def is_enrolled(cls, student_code, class_code):
         """
