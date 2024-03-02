@@ -8,11 +8,11 @@ def main() -> None:
     database = create_database.db
     try:
         initialize_data(
-            "data\\classrooms.json",
-            "data\\courses.json",
-            "data\\teachers.json",
-            "data\\students.json",
-            "data\\admins.json"
+            r"data\classrooms.json",
+            r"data\courses.json",
+            r"data\teachers.json",
+            r"data\students.json",
+            r"data\admins.json"
         )
     except:
         pass
