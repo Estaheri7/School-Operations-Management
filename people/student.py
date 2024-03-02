@@ -218,7 +218,7 @@ class Student(Person):
 
         course = Course.search_by_code(course_code)
         capacity = course[0][3]
-        print(current_enrollment)
+
         if current_enrollment < capacity and method == "add":
             update_query = f"""
             UPDATE classrooms
