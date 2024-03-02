@@ -69,7 +69,36 @@ def main() -> None:
                 else:
                     print("Invalid command!")
         elif role == "teacher":
-            pass
+            current_teacher = None
+            if pick == 1:
+                teacher = Teacher.get_attrs()
+                if not AM.is_registered(teacher[0], teacher[0].teacher_code):
+                    teacher[0].add_teacher()
+                    login = True
+                    current_teacher = teacher[0]
+                else:
+                    print("This account is already registered!")
+            elif pick == 2:
+                email = input("Enter your email: ")
+                password = input("Enter your password: ")
+                let_login = AM.can_login(role, email, password)
+                if let_login:
+                    login = True
+                    current_teacher = Teacher(
+                        let_login[0][1],
+                        let_login[0][2],
+                        let_login[0][3],
+                        let_login[0][4],
+                        let_login[0][5],
+                        let_login[0][6]
+                    )
+                    print("Logged in successfully")
+                else:
+                    print("Invalid email or password!")
+            else:
+                print("Invalid command!")
+            while login:
+                break
         elif role == "admin":
             if pick == 1:
                 name, email, password, gender, admin_code = Admin.enter_attrs()
