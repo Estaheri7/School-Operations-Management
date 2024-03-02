@@ -111,6 +111,12 @@ class Student(Person):
             print("Failed to enroll class")
 
     def delete_enrollment(self, class_code):
+        """
+        Removes enrollment for self instance for given class_code.
+
+        :param class_code: A unique code for each classroom.
+        """
+        
         if not self.is_enrolled(self.student_code, class_code):
             print("enrollment not found!")
             return
