@@ -56,7 +56,18 @@ def main() -> None:
             else:
                 print("Invalid command!")
             while login:
-                pass
+                Student.help()
+                choice = int(input())
+                if choice == 0:
+                    break
+                if choice == 1:
+                    class_code = input("Enter class code: ")
+                    current_student.enroll(class_code)
+                elif choice == 2:
+                    class_code = input("Enter class code: ")
+                    current_student.delete_enrollment(class_code)
+                else:
+                    print("Invalid command!")
         elif role == "teacher":
             pass
         elif role == "admin":
