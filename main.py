@@ -41,7 +41,6 @@ def main() -> None:
                 email = input("Enter your email: ")
                 password = input("Enter your password: ")
                 let_login = AM.can_login(role, email, password)
-                print(let_login)
                 if let_login:
                     login = True
                     current_student = Student(
@@ -57,7 +56,7 @@ def main() -> None:
             else:
                 print("Invalid command!")
             while login:
-                break
+                pass
         elif role == "teacher":
             pass
         elif role == "admin":
