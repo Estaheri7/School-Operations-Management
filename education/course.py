@@ -82,6 +82,19 @@ class Course:
         except:
             print("Failed to update course")
 
+    @classmethod
+    def search_by_code(cls, course_code):
+        search_query = f"""
+        SELECT * FROM courses
+        WHERE course_code = {course_code}
+        """
+
+        try:
+            result = cls.DB.execute_query(query=search_query)
+            return result
+        except:
+            print("Something went wrong while searching...")
+
     @staticmethod
     def get_attrs(file=None):
         """
