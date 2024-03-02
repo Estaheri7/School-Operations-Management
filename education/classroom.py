@@ -102,6 +102,7 @@ class Classroom:
             return result
         except:
             print("Something went wrong while searching...")
+
     @staticmethod
     def get_attrs(file=None):
         """
