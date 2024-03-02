@@ -90,9 +90,14 @@ class Student(Person):
 
     def enroll(self, class_code):
         """
-        Enrolls a class for given student_code.
+        Enrolls the student in a class identified by the given class code.
 
-        :param class_code:  given class for enroll.
+        :param class_code: The unique code identifying the class to enroll in.
+
+        Checks if the student is already enrolled in the specified class.
+        If not enrolled, checks if there is available space in the class.
+        If space is available, enrolls the student in the class and updates the enrollment count.
+        Otherwise, displays a message indicating that the class is full or the student is already enrolled.
         """
 
         if self.is_enrolled(self.student_code, class_code):
@@ -122,9 +127,13 @@ class Student(Person):
 
     def delete_enrollment(self, class_code):
         """
-        Removes enrollment for self instance for given class_code.
+        Removes the student's enrollment from the class identified by the given class code.
 
-        :param class_code: A unique code for each classroom.
+        :param class_code: The unique code identifying the class to remove enrollment from.
+
+        Checks if the student is enrolled in the specified class.
+        If enrolled, removes the student's enrollment from the class and updates the enrollment count.
+        Otherwise, displays a message indicating that the student is not enrolled in the class.
         """
         
         if not self.is_enrolled(self.student_code, class_code):
@@ -180,6 +189,30 @@ class Student(Person):
 
     @staticmethod
     def change_enrollment_value(method, classroom):
+        """
+        Modify the enrollment value for the given classroom.
+
+        :param method: The method to perform, either 'add' to increment enrollment or 'delete' to decrement it.
+        :param classroom: A tuple representing the classroom details retrieved from the database.
+
+        :return: A tuple containing a boolean indicating if the operation was successful,
+                 and a message indicating the result of the operation.
+
+        If 'method' is 'add' and there is still capacity in the classroom:
+        - Increases the current enrollment of the classroom by one.
+        - Commits the changes to the database.
+
+        If 'method' is 'delete' and the classroom has at least one enrollment:
+        - Decreases the current enrollment of the classroom by one.
+        - Commits the changes to the database.
+
+        If 'method' is 'delete' and the classroom has no enrollments:
+        - Returns False and a message indicating that the class has no enrollments.
+
+        If 'method' is 'add' and the classroom is already at full capacity:
+        - Returns False and a message indicating that the class is full.
+        """
+
         course_code = classroom[0][4]
         current_enrollment = classroom[0][2]
 
