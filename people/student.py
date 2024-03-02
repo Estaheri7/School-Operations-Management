@@ -295,3 +295,10 @@ class Student(Person):
         student_code = input("Enter student code: ")
         student = Student(name, email, password, gender, student_code)
         return [student]
+
+    @staticmethod
+    def help():
+        print("Welcome!\n")
+        print("1 -> Enroll to class")
+        print("2 -> Remove your enrollment from class")
+        print("0 -> logout")
