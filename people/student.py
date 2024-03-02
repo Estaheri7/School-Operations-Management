@@ -1,4 +1,5 @@
 from people.person import *
+from education import Classroom, Course
 from account_management import AccountManager
 import pandas as pd
 
@@ -125,6 +126,7 @@ class Student(Person):
         DELETE FROM student_classes
         WHERE class_code = {class_code} 
         """
+
         try:
             Student.DB.execute_query(query=delete_query)
             Student.DB.commit()
@@ -150,12 +152,32 @@ class Student(Person):
         SELECT student_class_id FROM student_classes
         WHERE student_code = %s AND class_code = %s
         """
+
         try:
             result = cls.DB.execute_query(query=search_query, params=(student_code, class_code))
             return result
         except:
             print("Something went wrong when enrolling.")
             return None
+
+    @staticmethod
+    def change_enrollment_value(method, classroom):
+        course_code = classroom[0][4]
+        current_enrollment = classroom[0][2]
+        course = Course.search_by_code(course_code)
+        capacity = course[0][3]
+        if current_enrollment < capacity and method == "add":
+            update_query = f"""
+            UPDATE classrooms
+            SET current_enrollment = current_enrollment + 1
+            WHERE class_code = {classroom[0][3]}
+            """
+
+            Student.DB.execute_query(query=update_query)
+            Student.DB.commit()
+        else:
+            return False, "Selected class is full!"
+        return True
 
     @staticmethod
     def get_attrs(file=None):
