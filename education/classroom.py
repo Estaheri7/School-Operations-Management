@@ -91,6 +91,17 @@ class Classroom:
         except:
             print("Failed to update records")
 
+    @classmethod
+    def search_by_code(cls, class_code):
+        search_query = f"""
+        SELECT * FROM classrooms
+        WHERE class_code = {class_code}
+        """
+        try:
+            result = cls.DB.execute_query(query=search_query)
+            return result
+        except:
+            print("Something went wrong while searching...")
     @staticmethod
     def get_attrs(file=None):
         """
