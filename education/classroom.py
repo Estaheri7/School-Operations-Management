@@ -93,6 +93,18 @@ class Classroom:
 
     @classmethod
     def search_by_code(cls, class_code):
+        """
+        Search for a classroom in the database by its class code.
+
+        :param class_code: The unique code identifying the classroom to search for.
+
+        :return: A list of tuples containing the details of the classroom if found, otherwise None.
+
+        Executes a SQL query to retrieve the details of the classroom with the provided class code.
+        Returns the result of the query if a classroom with the given code is found,
+        otherwise returns None.
+        """
+
         search_query = f"""
         SELECT * FROM classrooms
         WHERE class_code = {class_code}

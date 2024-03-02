@@ -84,6 +84,17 @@ class Course:
 
     @classmethod
     def search_by_code(cls, course_code):
+        """
+        Searches for a course in the database by its course code.
+
+        :param course_code: The unique code identifying the course.
+
+        :return: A list of tuples containing the details of the course if found, otherwise None.
+
+        Executes a SQL query to retrieve the details of the course with the provided course code.
+        Returns the result of the query if a course with the given code is found,
+        otherwise returns None.
+        """
         search_query = f"""
         SELECT * FROM courses
         WHERE course_code = {course_code}
