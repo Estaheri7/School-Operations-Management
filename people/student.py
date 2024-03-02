@@ -272,7 +272,10 @@ class Student(Person):
             students["student_code"] = students["student_code"].astype(int)
             for _, student_data in students.iterrows():
                 if not AccountManager.is_valid_email(student_data["email"]):
-                    print(f"Invalid email for {student_data['email']}\nSkipped...")
+                    print(f"Invalid email format for {student_data['email']}\nSkipped...")
+                    continue
+                if not AccountManager.is_valid_password(student_data["password"]):
+                    print(f"Invalid password format for {student_data['email']}\nSkipped...")
                     continue
                 new_student = Student(
                     student_data["name"],
@@ -287,7 +290,7 @@ class Student(Person):
         name = input("Enter name: ")
         email = input("Enter email: ")
         while not AccountManager.is_valid_email(email):
-            email = input("Invalid email! try another: ")
+            email = input("Invalid email format! try another: ")
         password = input("Enter password: ")
         while not AccountManager.is_valid_password(password):
             print("1 - Password should be at least 8 characters")

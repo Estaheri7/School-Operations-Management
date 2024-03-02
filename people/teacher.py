@@ -120,7 +120,10 @@ class Teacher(Person):
             teachers["department_id"] = teachers["department_id"].astype(int)
             for _, teacher_data in teachers.iterrows():
                 if not AccountManager.is_valid_email(teacher_data["email"]):
-                    print(f"Invalid email for {teacher_data['email']}\nSkipped...")
+                    print(f"Invalid email format for {teacher_data['email']}\nSkipped...")
+                    continue
+                if not AccountManager.is_valid_password(teacher_data["password"]):
+                    print(f"Invalid password format for {teacher_data['email']}\nSkipped...")
                     continue
                 new_teacher = Teacher(
                     teacher_data["name"],
@@ -136,7 +139,7 @@ class Teacher(Person):
         name = input("Enter name: ")
         email = input("Enter email: ")
         while not AccountManager.is_valid_email(email):
-            email = input("Invalid email! try another: ")
+            email = input("Invalid email format! try another: ")
         password = input("Enter password: ")
         while not AccountManager.is_valid_password(password):
             print("1 - Password should be at least 8 characters")
