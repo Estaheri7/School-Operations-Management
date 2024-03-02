@@ -131,17 +131,26 @@ class Student(Person):
             print("enrollment not found!")
             return
 
-        delete_query = f"""
-        DELETE FROM student_classes
-        WHERE class_code = {class_code} 
-        """
+        classroom = Classroom.search_by_code(class_code)
+        if not classroom:
+            print("Classroom not found! (Invalid class code)")
+            return
 
-        try:
-            Student.DB.execute_query(query=delete_query)
-            Student.DB.commit()
-            print("Enrollment deleted successfully")
-        except:
-            print("Failed to delete enrollment!")
+        access, msg = self.change_enrollment_value("delete", classroom)
+        if access:
+            delete_query = f"""
+            DELETE FROM student_classes
+            WHERE student_code = {self.student_code} 
+            """
+
+            try:
+                Student.DB.execute_query(query=delete_query)
+                Student.DB.commit()
+                print(msg)
+            except:
+                print("Failed to delete enrollment!")
+        else:
+            print(msg)
 
     @classmethod
     def is_enrolled(cls, student_code, class_code):
@@ -173,8 +182,10 @@ class Student(Person):
     def change_enrollment_value(method, classroom):
         course_code = classroom[0][4]
         current_enrollment = classroom[0][2]
+
         course = Course.search_by_code(course_code)
         capacity = course[0][3]
+
         if current_enrollment < capacity and method == "add":
             update_query = f"""
             UPDATE classrooms
@@ -184,9 +195,20 @@ class Student(Person):
 
             Student.DB.execute_query(query=update_query)
             Student.DB.commit()
+        elif current_enrollment > 0 and method == "delete":
+            update_query = f"""
+            UPDATE classrooms
+            SET current_enrollment = current_enrollment - 1
+            WHERE class_code = {classroom[0][3]}
+            """
+
+            Student.DB.execute_query(query=update_query)
+            Student.DB.commit()
+        elif current_enrollment == 0 and method == "delete":
+            return False, "Selected class does not have enrollment at all!"
         else:
             return False, "Selected class is full!"
-        return True, "Enrolled to successfully!"
+        return True, "Done!"
 
     @staticmethod
     def get_attrs(file=None):
