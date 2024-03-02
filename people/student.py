@@ -96,20 +96,29 @@ class Student(Person):
         """
 
         if self.is_enrolled(self.student_code, class_code):
-            print("This student already enrolled this class!")
+            print("This student has already enrolled this class!")
             return
 
-        enroll_query = """
-        INSERT INTO student_classes(student_code, class_code)
-        VALUES (%s, %s)
-        """
+        classroom = Classroom.search_by_code(class_code)
+        if not classroom:
+            print("Classroom not found (Invalid class code)")
+            return
 
-        try:
-            Student.DB.execute_query(query=enroll_query, params=(self.student_code, class_code))
-            Student.DB.commit()
-            print("Enrolled to class successfully!")
-        except:
-            print("Failed to enroll class")
+        access, msg = self.change_enrollment_value("add", classroom)
+        if access:
+            enroll_query = """
+            INSERT INTO student_classes(student_code, class_code)
+            VALUES (%s, %s)
+            """
+
+            try:
+                Student.DB.execute_query(query=enroll_query, params=(self.student_code, class_code))
+                Student.DB.commit()
+                print(msg)
+            except:
+                print("Failed to enroll class")
+        else:
+            print(msg)
 
     def delete_enrollment(self, class_code):
         """
@@ -177,7 +186,7 @@ class Student(Person):
             Student.DB.commit()
         else:
             return False, "Selected class is full!"
-        return True
+        return True, "Enrolled to successfully!"
 
     @staticmethod
     def get_attrs(file=None):
