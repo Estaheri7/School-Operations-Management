@@ -246,11 +246,16 @@ class Admin(Person):
         :return: A tuple containing the entered attributes in the following order: (name, email, password, gender,
                  admin_code). If gender is not provided (blank input), it will be returned as None.
         """
+
         name = input("Enter name: ")
         email = input("Enter your email: ")
         while not AccountManager.is_valid_email(email):
             email = input("Invalid email! try another: ")
         password = input("Enter your password: ")
+        while not AccountManager.is_valid_password(password):
+            print("1 - Password should be at least 8 characters")
+            print("2 - Password should have number and alphabet too")
+            password = input("Enter password: ")
         gender = input("Enter your gender or blank: ")
         if not gender.strip():
             gender = None

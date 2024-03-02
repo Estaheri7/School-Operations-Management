@@ -132,11 +132,16 @@ class Teacher(Person):
                 )
                 all_teachers.append(new_teacher)
             return all_teachers
+
         name = input("Enter name: ")
         email = input("Enter email: ")
         while not AccountManager.is_valid_email(email):
             email = input("Invalid email! try another: ")
         password = input("Enter password: ")
+        while not AccountManager.is_valid_password(password):
+            print("1 - Password should be at least 8 characters")
+            print("2 - Password should have number and alphabet too")
+            password = input("Enter password: ")
         gender = input("Enter gender or enter to skip: ")
         if not gender.strip():
             gender = None
