@@ -1,5 +1,6 @@
 from people.person import *
 from account_management import AccountManager
+from education import Classroom
 import pandas as pd
 
 
@@ -89,6 +90,18 @@ class Teacher(Person):
             print(f"Records updated for teacher with code {teacher_code}")
         except:
             print("Failed to update records")
+
+    def add_grade(self, student_code, class_code):
+        result = Classroom.search_by_code(class_code)
+        if not result:
+            print("Class room not found!")
+            return
+
+        if self.teacher_code != result[0][5]:
+            print("Class not found!")
+            return
+
+        
 
     @staticmethod
     def get_attrs(file=None):
