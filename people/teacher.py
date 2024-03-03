@@ -153,6 +153,15 @@ class Teacher(Person):
         return result
 
     @staticmethod
+    def search_by_code(teacher_code):
+        search_query = f"""
+        SELECT * FROM teachers
+        WHERE teacher_code = {teacher_code}
+        """
+
+        return Teacher.DB.execute_query(query=search_query)
+
+    @staticmethod
     def get_attrs(file=None):
         """
         Retrieve attributes for creating Teacher objects.
