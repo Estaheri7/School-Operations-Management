@@ -116,37 +116,6 @@ class Classroom:
             print("Something went wrong while searching...")
 
     @staticmethod
-    def advanced_search(criteria=None):
-        """
-        Performs an advanced search on the classroom database based on multiple criteria.
-        If no criteria are provided, returns all classroom records.
-
-        :param criteria: Optional. A dictionary containing the search criteria.
-                         Example: {'class_name': 'Math', 'teacher_code': 123}
-
-        :return: A list of tuples containing the classroom records that match the search criteria,
-                 or all classroom records if no criteria are provided.
-        """
-
-        if criteria is None or len(criteria) == 0:
-            search_query = "SELECT * FROM classrooms"
-        else:
-            search_query = "SELECT * FROM classrooms WHERE "
-            conditions = []
-
-            for key, value in criteria.items():
-                conditions.append(f"{key} = '{value}'")
-
-            search_query += " AND ".join(conditions)
-
-        try:
-            result = Classroom.DB.execute_query(query=search_query)
-            return result
-        except:
-            print(f"Search failed")
-            return None
-
-    @staticmethod
     def get_attrs(file=None):
         """
         Generates a list of Classroom objects based on user input or data from a CSV file.
