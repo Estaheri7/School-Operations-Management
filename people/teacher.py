@@ -91,15 +91,29 @@ class Teacher(Person):
         except:
             print("Failed to update records")
 
-    def add_grade(self, student_code, class_code):
+    def add_grade(self, student_code, class_code, new_grade):
         result = Classroom.search_by_code(class_code)
         if not result:
-            print("Class room not found!")
+            print("Classroom not found!")
             return
 
         if self.teacher_code != result[0][5]:
-            print("Class not found!")
+            print("Classroom not found!")
             return
+
+        enrolled = Teacher.find_student_class(student_code, class_code)
+        if enrolled:
+            update_query = f"""
+            UPDATE student_classes
+            SET grade = {new_grade}
+            WHERE student_code = {student_code} AND class_code = {class_code}
+            """
+            try:
+                Teacher.DB.execute_query(query=update_query)
+                Teacher.DB.commit()
+                print("grade added successfully!")
+            except:
+                print("Failed to add grade!")
 
     @staticmethod
     def find_student_class(student_code, class_code):
