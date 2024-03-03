@@ -98,7 +98,17 @@ def main() -> None:
             else:
                 print("Invalid command!")
             while login:
-                break
+                Teacher.help()
+                choice = int(input())
+                if choice == 0:
+                    break
+                if choice == 1:
+                    student_code = input("Enter student code: ")
+                    class_code = input("Enter class code: ")
+                    new_grade = int(input("Enter grade: "))
+                    current_teacher.add_grade(student_code, class_code, new_grade)
+                else:
+                    print("Invalid command!")
         elif role == "admin":
             if pick == 1:
                 name, email, password, gender, admin_code = Admin.enter_attrs()
