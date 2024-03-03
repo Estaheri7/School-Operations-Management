@@ -143,7 +143,7 @@ class Teacher(Person):
         Executes an SQL query to search for a record in the student_classes table corresponding to the provided
         student code and class code. Returns the result of the query if a record is found, otherwise returns None.
         """
-        
+
         search_query = """
         SELECT * FROM student_classes
         WHERE student_code = %s AND class_code = %s
@@ -214,3 +214,10 @@ class Teacher(Person):
         department_id = int(input("Enter department ID: "))
         teacher = Teacher(name, email, password, gender, teacher_code, department_id)
         return [teacher]
+
+    @staticmethod
+    def help():
+        print("Welcome")
+        print("1 -> Add grade")
+        print("0 -> log out")
+        
