@@ -59,6 +59,7 @@ def main() -> None:
                 Student.help()
                 choice = int(input())
                 if choice == 0:
+                    login = False
                     break
                 if choice == 1:
                     class_code = input("Enter class code: ")
@@ -101,6 +102,7 @@ def main() -> None:
                 Teacher.help()
                 choice = int(input())
                 if choice == 0:
+                    login = False
                     break
                 if choice == 1:
                     student_code = input("Enter student code: ")
@@ -134,6 +136,7 @@ def main() -> None:
                 Admin.help()
                 choice = int(input())
                 if choice == 0:
+                    login = False
                     break
                 elif choice == 1:
                     Admin.do_object("student")
