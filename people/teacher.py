@@ -92,6 +92,21 @@ class Teacher(Person):
             print("Failed to update records")
 
     def add_grade(self, student_code, class_code, new_grade):
+        """
+        Adds a grade for a student enrolled in a class.
+
+        :param student_code: The unique code identifying the student.
+        :param class_code: The unique code identifying the class.
+        :param new_grade: The new grade to be added for the student in the class.
+
+        Retrieves the class details using the provided class code. If the class is not found or the teacher
+        does not teach the class, an error message is printed, and the method returns.
+
+        Checks if the provided student is enrolled in the class. If enrolled, updates the grade for the student
+        in the class by executing an SQL query. If successful, commits the transaction and prints a success message.
+        If an error occurs during the update process, prints a failure message.
+        """
+
         result = Classroom.search_by_code(class_code)
         if not result:
             print("Classroom not found!")
@@ -117,6 +132,18 @@ class Teacher(Person):
 
     @staticmethod
     def find_student_class(student_code, class_code):
+        """
+        Searches for a student's enrollment record in a specific class.
+
+        :param student_code: The unique code identifying the student.
+        :param class_code: The unique code identifying the class.
+
+        :return: A list of tuples containing the enrollment record if found, otherwise None.
+
+        Executes an SQL query to search for a record in the student_classes table corresponding to the provided
+        student code and class code. Returns the result of the query if a record is found, otherwise returns None.
+        """
+        
         search_query = """
         SELECT * FROM student_classes
         WHERE student_code = %s AND class_code = %s
