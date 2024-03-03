@@ -101,7 +101,15 @@ class Teacher(Person):
             print("Class not found!")
             return
 
-        
+    @staticmethod
+    def find_student_class(student_code, class_code):
+        search_query = """
+        SELECT * FROM student_classes
+        WHERE student_code = %s AND class_code = %s
+        """
+
+        result = Teacher.DB.execute_query(query=search_query, params=(student_code, class_code))
+        return result
 
     @staticmethod
     def get_attrs(file=None):
