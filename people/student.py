@@ -244,6 +244,15 @@ class Student(Person):
         return True, "Done!"
 
     @staticmethod
+    def search_by_code(student_code):
+        search_query = f"""
+        SELECT * FROM students
+        WHERE student_code = {student_code}
+        """
+
+        return Student.DB.execute_query(query=search_query)
+
+    @staticmethod
     def get_attrs(file=None):
         """
         Retrieve attributes for creating Student objects.
