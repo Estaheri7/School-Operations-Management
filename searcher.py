@@ -50,3 +50,16 @@ class Searcher:
             print(f"Course subject -> {course[0][1]}")
             print(f"Course capacity -> {course[0][3]}")
             print(f"Classroom code -> {classroom[3]}")
+
+    @staticmethod
+    def display_enrolled(enrolls):
+        if not enrolls:
+            print("Enrolls not found!")
+            return
+
+        for enroll in enrolls:
+            print("-"*10)
+            print(enroll[2])
+            classroom = Classroom.search_by_code(enroll[2])
+            print(f"Enrolled in {classroom[0][1]} class with code {enroll[2]}")
+            print(f"Grade in this classroom -> {enroll[3]}")
