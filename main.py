@@ -176,6 +176,10 @@ def main() -> None:
                 elif choice == 5:
                     criteria = {}
                     table = input("Enter table name to search it: ")
+                    tbs = ["classrooms", "courses", "students", "teachers", "admins", "student_classes"]
+                    if table not in tbs:
+                        print(tbs)
+                        table = input("Please select one of these: ")
                     while True:
                         key = input("Enter the column name (key) to search (or press Enter to stop): ").strip()
                         if not key:
