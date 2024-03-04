@@ -269,4 +269,5 @@ class Admin(Person):
         print("2 -> Add/Remove/Update teacher")
         print("3 -> Add/Remove/Update classroom")
         print("4 -> Add/Remove/Update course")
+        print("5 -> Advance search")
         print("0 -> logout")
