@@ -1,6 +1,6 @@
 from education import Classroom, Course
 from people import Student, Admin, Teacher
-from databases import MySQLConnector
+from databases import MySQLConnector, create_database
 import json
 
 
@@ -25,6 +25,8 @@ class Searcher:
         :return: A list of tuples containing the records that match the search criteria,
                  or all records from the specified table if no criteria are provided.
         """
+
+        Searcher.DB = create_database.db
 
         if criteria is None or len(criteria) == 0:
             search_query = f"SELECT * FROM {table}"
