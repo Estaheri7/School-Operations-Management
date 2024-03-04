@@ -1,7 +1,9 @@
 from databases import MySQLConnector, tables, create_database
-from data.initialize_data import *
-from people import Admin
+from people import Admin, Student, Teacher
+from education import Classroom, Course
+from data.initialize_data import initialize_data
 from account_management import *
+from searcher import Searcher
 
 
 def main() -> None:
@@ -63,6 +65,8 @@ def main() -> None:
                     login = False
                     break
                 if choice == 1:
+                    print("Classes to enroll: ")
+                    Searcher.display_classroom(Searcher.advanced_search("classrooms"))
                     class_code = input("Enter class code: ")
                     current_student.enroll(class_code)
                 elif choice == 2:
