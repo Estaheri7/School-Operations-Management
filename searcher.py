@@ -37,3 +37,16 @@ class Searcher:
         except:
             print(f"Search failed")
             return None
+
+    @staticmethod
+    def display_classroom(classrooms):
+        for classroom in classrooms:
+            teacher = Teacher.search_by_code(classroom[5])
+            course = Course.search_by_code(classroom[4])
+            print("-"*17)
+            print(f"Classroom name -> {classroom[1]}")
+            print(f"Current enrollments -> {classroom[2]}")
+            print(f"Teacher name -> {teacher[0][1]}")
+            print(f"Course subject -> {course[0][1]}")
+            print(f"Course capacity -> {course[0][3]}")
+            print(f"Classroom code -> {classroom[3]}")
