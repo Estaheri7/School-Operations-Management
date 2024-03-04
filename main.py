@@ -149,12 +149,17 @@ def main() -> None:
                     login = False
                     break
                 elif choice == 1:
+                    print("Students:")
+                    Searcher.display_student(Searcher.advanced_search("students"))
                     Admin.do_object("student")
                 elif choice == 2:
+                    Searcher.display_teacher(Searcher.advanced_search("teachers"))
                     Admin.do_object("teacher")
                 elif choice == 3:
+                    Searcher.display_classroom(Searcher.advanced_search("classrooms"))
                     Admin.do_object("classroom")
                 elif choice == 4:
+                    Searcher.display_course(Searcher.advanced_search("courses"))
                     Admin.do_object("course")
                 else:
                     print("Invalid command!")
