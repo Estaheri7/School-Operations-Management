@@ -277,24 +277,27 @@ class Student(Person):
 
         if file:
             all_students = []
-            students = pd.read_csv(file)
-            students["student_code"] = students["student_code"].astype(int)
-            for _, student_data in students.iterrows():
-                if not AccountManager.is_valid_email(student_data["email"]):
-                    print(f"Invalid email format for {student_data['email']}\nSkipped...")
-                    continue
-                if not AccountManager.is_valid_password(student_data["password"]):
-                    print(f"Invalid password format for {student_data['email']}\nSkipped...")
-                    continue
-                new_student = Student(
-                    student_data["name"],
-                    student_data["email"],
-                    student_data["password"],
-                    student_data["gender"],
-                    student_data["student_code"]
-                )
-                all_students.append(new_student)
-            return all_students
+            try:
+                students = pd.read_csv(file)
+                students["student_code"] = students["student_code"].astype(int)
+                for _, student_data in students.iterrows():
+                    if not AccountManager.is_valid_email(student_data["email"]):
+                        print(f"Invalid email format for {student_data['email']}\nSkipped...")
+                        continue
+                    if not AccountManager.is_valid_password(student_data["password"]):
+                        print(f"Invalid password format for {student_data['email']}\nSkipped...")
+                        continue
+                    new_student = Student(
+                        student_data["name"],
+                        student_data["email"],
+                        student_data["password"],
+                        student_data["gender"],
+                        student_data["student_code"]
+                    )
+                    all_students.append(new_student)
+                return all_students
+            except FileNotFoundError:
+                print("File not found!")
 
         name = input("Enter name: ")
         email = input("Enter email: ")
@@ -302,7 +305,7 @@ class Student(Person):
             email = input("Invalid email format! try another: ")
         password = input("Enter password: ")
         while not AccountManager.is_valid_password(password):
-            print("1 - Password should be at least 8 characters")
+            print("1 - Password should be at least 9 characters")
             print("2 - Password should have number and alphabet too")
             password = input("Enter password: ")
         gender = input("Enter gender: ")

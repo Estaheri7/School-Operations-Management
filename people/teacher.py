@@ -185,27 +185,30 @@ class Teacher(Person):
         """
 
         if file:
-            teachers = pd.read_csv(file)
-            all_teachers = []
-            teachers["teacher_code"] = teachers["teacher_code"].astype(int)
-            teachers["department_id"] = teachers["department_id"].astype(int)
-            for _, teacher_data in teachers.iterrows():
-                if not AccountManager.is_valid_email(teacher_data["email"]):
-                    print(f"Invalid email format for {teacher_data['email']}\nSkipped...")
-                    continue
-                if not AccountManager.is_valid_password(teacher_data["password"]):
-                    print(f"Invalid password format for {teacher_data['email']}\nSkipped...")
-                    continue
-                new_teacher = Teacher(
-                    teacher_data["name"],
-                    teacher_data["email"],
-                    teacher_data["password"],
-                    teacher_data["gender"],
-                    teacher_data["teacher_code"],
-                    teacher_data["department_id"]
-                )
-                all_teachers.append(new_teacher)
-            return all_teachers
+            try:
+                teachers = pd.read_csv(file)
+                all_teachers = []
+                teachers["teacher_code"] = teachers["teacher_code"].astype(int)
+                teachers["department_id"] = teachers["department_id"].astype(int)
+                for _, teacher_data in teachers.iterrows():
+                    if not AccountManager.is_valid_email(teacher_data["email"]):
+                        print(f"Invalid email format for {teacher_data['email']}\nSkipped...")
+                        continue
+                    if not AccountManager.is_valid_password(teacher_data["password"]):
+                        print(f"Invalid password format for {teacher_data['email']}\nSkipped...")
+                        continue
+                    new_teacher = Teacher(
+                        teacher_data["name"],
+                        teacher_data["email"],
+                        teacher_data["password"],
+                        teacher_data["gender"],
+                        teacher_data["teacher_code"],
+                        teacher_data["department_id"]
+                    )
+                    all_teachers.append(new_teacher)
+                return all_teachers
+            except FileNotFoundError:
+                print("File not found!")
 
         name = input("Enter name: ")
         email = input("Enter email: ")
@@ -213,14 +216,14 @@ class Teacher(Person):
             email = input("Invalid email format! try another: ")
         password = input("Enter password: ")
         while not AccountManager.is_valid_password(password):
-            print("1 - Password should be at least 8 characters")
+            print("1 - Password should be at least 9 characters")
             print("2 - Password should have number and alphabet too")
             password = input("Enter password: ")
         gender = input("Enter gender or enter to skip: ")
         if not gender.strip():
             gender = None
-        teacher_code = int(input("Enter teacher code: "))
-        department_id = int(input("Enter department ID: "))
+        teacher_code = input("Enter teacher code: ")
+        department_id = input("Enter department ID: ")
         teacher = Teacher(name, email, password, gender, teacher_code, department_id)
         return [teacher]
 

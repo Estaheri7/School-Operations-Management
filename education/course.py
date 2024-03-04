@@ -119,18 +119,21 @@ class Course:
         """
         
         if file:
-            courses = pd.read_csv(file)
-            all_courses = []
-            courses["course_code"] = courses["course_code"].astype(int)
-            courses["capacity"] = courses["capacity"].astype(int)
-            for _, course_data in courses.iterrows():
-                new_course = Course(
-                    course_data["name"],
-                    course_data["course_code"],
-                    course_data["capacity"],
-                )
-                all_courses.append(new_course)
-            return all_courses
+            try:
+                courses = pd.read_csv(file)
+                all_courses = []
+                courses["course_code"] = courses["course_code"].astype(int)
+                courses["capacity"] = courses["capacity"].astype(int)
+                for _, course_data in courses.iterrows():
+                    new_course = Course(
+                        course_data["name"],
+                        course_data["course_code"],
+                        course_data["capacity"],
+                    )
+                    all_courses.append(new_course)
+                return all_courses
+            except FileNotFoundError:
+                print("File not found!")
         name = input("Enter name: ")
         course_code = input("Enter course code: ")
         capacity = int(input("Enter capacity: "))
