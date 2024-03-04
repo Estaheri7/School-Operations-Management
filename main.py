@@ -121,6 +121,15 @@ def main() -> None:
                         print("Invalid value for grade!")
                         new_grade = int(input("Grade must be between 0 and 20: "))
                     current_teacher.add_grade(student_code, class_code, new_grade)
+                elif choice == 2:
+                    conditions = {"teacher_code": current_teacher.teacher_code}
+                    all_classrooms = Searcher.advanced_search("classrooms", conditions)
+                    class_code = set()
+                    for classroom in all_classrooms:
+                        class_code.add(classroom[3])
+                    for code in class_code:
+                        condition = {"class_code": code}
+                        Searcher.display_enrolled(Searcher.advanced_search("student_classes", condition))
                 else:
                     print("Invalid command!")
         elif role == "admin":
