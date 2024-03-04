@@ -113,7 +113,7 @@ class Teacher(Person):
             return
 
         if self.teacher_code != result[0][5]:
-            print("Classroom not found!")
+            print("You don't own this classroom!")
             return
 
         enrolled = Teacher.find_student_class(student_code, class_code)
