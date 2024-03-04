@@ -117,6 +117,9 @@ def main() -> None:
                     student_code = input("Enter student code: ")
                     class_code = input("Enter class code: ")
                     new_grade = int(input("Enter grade: "))
+                    while new_grade < 0 or new_grade > 20:
+                        print("Invalid value for grade!")
+                        new_grade = int(input("Grade must be between 0 and 20: "))
                     current_teacher.add_grade(student_code, class_code, new_grade)
                 else:
                     print("Invalid command!")
