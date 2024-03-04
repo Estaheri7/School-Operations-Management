@@ -66,10 +66,15 @@ def main() -> None:
                     break
                 if choice == 1:
                     print("Classes to enroll: ")
+                    Searcher.DB = create_database.db
                     Searcher.display_classroom(Searcher.advanced_search("classrooms"))
                     class_code = input("Enter class code: ")
                     current_student.enroll(class_code)
                 elif choice == 2:
+                    print("Your enrollments: ")
+                    Searcher.DB = create_database.db
+                    conditions = {"student_code": current_student.student_code}
+                    Searcher.display_enrolled(Searcher.advanced_search("student_classes", conditions))
                     class_code = input("Enter class code: ")
                     current_student.delete_enrollment(class_code)
                 else:
