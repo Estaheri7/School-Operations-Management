@@ -70,3 +70,41 @@ class Searcher:
             classroom = Classroom.search_by_code(enroll[2])
             print(f"Enrolled in {classroom[0][1]} class with code {enroll[2]}")
             print(f"Grade in this classroom -> {enroll[3]}")
+
+    @staticmethod
+    def display_student(students):
+        if not students:
+            print("No students found!")
+            return
+
+        for student in students:
+            print("-" * 17)
+            print(f"Student name -> {student[1]}")
+            print(f"Email -> {student[2]}")
+            print(f"Gender -> {student[4]}")
+            print(f"Student code -> {student[5]}")
+
+    @staticmethod
+    def display_teacher(teachers):
+        if not teachers:
+            print("No teachers found!")
+            return
+
+        for teacher in teachers:
+            print("-" * 17)
+            print(f"Teacher name -> {teacher[1]}")
+            print(f"Email -> {teacher[2]}")
+            print(f"Gender -> {teacher[4]}")
+            print(f"Teacher code -> {teacher[5]}")
+
+    @staticmethod
+    def display_course(courses):
+        if not courses:
+            print("No courses found!")
+            return
+
+        for course in courses:
+            print("-" * 17)
+            print(f"Course name -> {course[1]}")
+            print(f"Capacity -> {course[3]}")
+            print(f"Course code -> {course[2]}")
