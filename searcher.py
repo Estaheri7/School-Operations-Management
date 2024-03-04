@@ -48,6 +48,7 @@ class Searcher:
 
     @staticmethod
     def display_classroom(classrooms):
+        Classroom.DB = create_database.db
         for classroom in classrooms:
             teacher = Teacher.search_by_code(classroom[5])
             course = Course.search_by_code(classroom[4])
@@ -73,6 +74,7 @@ class Searcher:
 
     @staticmethod
     def display_student(students):
+        Student.DB = create_database.db
         if not students:
             print("No students found!")
             return
@@ -86,6 +88,7 @@ class Searcher:
 
     @staticmethod
     def display_teacher(teachers):
+        Teacher.DB = create_database.db
         if not teachers:
             print("No teachers found!")
             return
@@ -99,6 +102,7 @@ class Searcher:
 
     @staticmethod
     def display_course(courses):
+        Course.DB = create_database.db
         if not courses:
             print("No courses found!")
             return
