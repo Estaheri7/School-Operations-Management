@@ -161,6 +161,30 @@ def main() -> None:
                 elif choice == 4:
                     Searcher.display_course(Searcher.advanced_search("courses"))
                     Admin.do_object("course")
+                elif choice == 5:
+                    criteria = {}
+                    table = input("Enter table name to search it: ")
+                    while True:
+                        key = input("Enter the column name (key) to search (or press Enter to stop): ").strip()
+                        if not key:
+                            break
+                        value = input("Enter the value to search for: ")
+                        criteria[key] = value
+
+                    print("Searching...")
+                    results = Searcher.advanced_search(table, criteria)
+                    if results:
+                        print("Search Results:")
+                        if table == "classrooms":
+                            Searcher.display_classroom(results)
+                        elif table == "students":
+                            Searcher.display_student(results)
+                        elif table == "teachers":
+                            Searcher.display_teacher(results)
+                        elif table == "courses":
+                            Searcher.display_course(results)
+                    else:
+                        print("No matching records found.")
                 else:
                     print("Invalid command!")
         else:
