@@ -1,8 +1,14 @@
 from education import Classroom, Course
 from people import Student, Admin, Teacher
+from databases import MySQLConnector
+import json
 
 
 class Searcher:
+    with open("databases/db_info.json", "r") as file:
+        db_info = json.load(file)
+    DB = MySQLConnector(**db_info)
+
     @staticmethod
     def advanced_search(table, criteria=None):
         """
@@ -32,7 +38,7 @@ class Searcher:
             search_query += " AND ".join(conditions)
 
         try:
-            result = Classroom.DB.execute_query(query=search_query)
+            result = Searcher.DB.execute_query(query=search_query)
             return result
         except:
             print(f"Search failed")
@@ -59,7 +65,6 @@ class Searcher:
 
         for enroll in enrolls:
             print("-"*10)
-            print(enroll[2])
             classroom = Classroom.search_by_code(enroll[2])
             print(f"Enrolled in {classroom[0][1]} class with code {enroll[2]}")
             print(f"Grade in this classroom -> {enroll[3]}")
