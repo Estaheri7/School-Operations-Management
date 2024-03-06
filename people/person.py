@@ -14,7 +14,7 @@ class Person(ABC):
         self.password = password
         self.gender = gender
 
-    @classmethod
-    def remove_person(cls, person_code):
+    @staticmethod
+    def remove_person(person_code):
         pass
 
