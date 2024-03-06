@@ -220,6 +220,14 @@ def main() -> None:
                             Searcher.display_course(results)
                     else:
                         print("No matching records found.")
+                elif choice == 6:
+                    report = DataReport(
+                        "Teacher Workload",
+                        "Teachers",
+                        "Course - Students",
+                        figsize=(7, 7)
+                    )
+                    report.analyze_teacher_workload()
                 else:
                     print("Invalid command!")
         else:
