@@ -69,3 +69,19 @@ class DataReport:
         plt.grid(True)
 
         plt.show()
+
+    def visualize_enrollment_distribution(self):
+        classrooms = Searcher.advanced_search("classrooms")
+        if not classrooms:
+            print("Classrooms not found!")
+            return
+        class_codes = [str(enrollment[3]) for enrollment in classrooms]
+        current_enrollments = [str(enrollment[2]) for enrollment in classrooms]
+
+        plt.figure(figsize=self.figsize)
+        plt.bar(class_codes, current_enrollments, color=self.color)
+        plt.title(self.title)
+        plt.xlabel(self.xlabel)
+        plt.ylabel(self.ylabel)
+
+        plt.show()
