@@ -76,6 +76,15 @@ def main() -> None:
                     Searcher.display_enrolled(Searcher.advanced_search("student_classes", conditions))
                     class_code = input("Enter class code: ")
                     current_student.delete_enrollment(class_code)
+                elif choice == 3:
+                    report = DataReport(
+                        "Class Enrollment Distribution",
+                        "Class Code",
+                        "Enrollments",
+                        ["purple", "blue"],
+                        (7, 7)
+                    )
+                    report.visualize_enrollment_distribution()
                 else:
                     print("Invalid command!")
         elif role == "teacher":
