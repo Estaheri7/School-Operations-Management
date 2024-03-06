@@ -38,14 +38,14 @@ class Student(Person):
             self.student_code
         )
         try:
-            Student.DB.execute_query(query=query, params=values)
-            Student.DB.commit()
+            Person.DB.execute_query(query=query, params=values)
+            Person.DB.commit()
             print("Student added successfully!")
         except Exception as e:
             raise e
 
-    @classmethod
-    def remove_person(cls, person_code):
+    @staticmethod
+    def remove_person(person_code):
         """
         Removes a student record from database.
         If a selected student is enrolled in a class, their record will be removed from
@@ -59,14 +59,14 @@ class Student(Person):
         """
 
         try:
-            cls.DB.execute_query(query=remove_query, params=(person_code,))
-            cls.DB.commit()
+            Person.DB.execute_query(query=remove_query, params=(person_code,))
+            Person.DB.commit()
             print(f"Student with code {person_code} removed!")
         except:
             print("Failed to remove Student")
 
-    @classmethod
-    def update_student(cls, student_code, new_values):
+    @staticmethod
+    def update_student(student_code, new_values):
         """
         Updates records for teacher by given parameters.
 
@@ -82,8 +82,8 @@ class Student(Person):
         """
 
         try:
-            cls.DB.execute_query(query=update_query, params=new_values)
-            cls.DB.commit()
+            Person.DB.execute_query(query=update_query, params=new_values)
+            Person.DB.commit()
             print(f"Records updated for student with code {student_code}")
         except:
             print("Failed to update records")
@@ -117,8 +117,8 @@ class Student(Person):
             """
 
             try:
-                Student.DB.execute_query(query=enroll_query, params=(self.student_code, class_code))
-                Student.DB.commit()
+                Person.DB.execute_query(query=enroll_query, params=(self.student_code, class_code))
+                Person.DB.commit()
                 print(msg)
             except:
                 print("Failed to enroll class")
@@ -135,7 +135,7 @@ class Student(Person):
         If enrolled, removes the student's enrollment from the class and updates the enrollment count.
         Otherwise, displays a message indicating that the student is not enrolled in the class.
         """
-        
+
         if not self.is_enrolled(self.student_code, class_code):
             print("enrollment not found!")
             return
@@ -153,16 +153,16 @@ class Student(Person):
             """
 
             try:
-                Student.DB.execute_query(query=delete_query)
-                Student.DB.commit()
+                Person.DB.execute_query(query=delete_query)
+                Person.DB.commit()
                 print(msg)
             except:
                 print("Failed to delete enrollment!")
         else:
             print(msg)
 
-    @classmethod
-    def is_enrolled(cls, student_code, class_code):
+    @staticmethod
+    def is_enrolled(student_code, class_code):
         """
         Check if a student with the given student code is enrolled in a class with the given class code.
 
@@ -181,7 +181,7 @@ class Student(Person):
         """
 
         try:
-            result = cls.DB.execute_query(query=search_query, params=(student_code, class_code))
+            result = Person.DB.execute_query(query=search_query, params=(student_code, class_code))
             return result
         except:
             print("Something went wrong when enrolling.")
@@ -226,8 +226,8 @@ class Student(Person):
             WHERE class_code = {classroom[0][3]}
             """
 
-            Student.DB.execute_query(query=update_query)
-            Student.DB.commit()
+            Person.DB.execute_query(query=update_query)
+            Person.DB.commit()
         elif current_enrollment > 0 and method == "delete":
             update_query = f"""
             UPDATE classrooms
@@ -235,8 +235,8 @@ class Student(Person):
             WHERE class_code = {classroom[0][3]}
             """
 
-            Student.DB.execute_query(query=update_query)
-            Student.DB.commit()
+            Person.DB.execute_query(query=update_query)
+            Person.DB.commit()
         elif current_enrollment == 0 and method == "delete":
             return False, "Selected class does not have enrollment at all!"
         else:
@@ -250,7 +250,7 @@ class Student(Person):
         WHERE student_code = {student_code}
         """
 
-        return Student.DB.execute_query(query=search_query)
+        return Person.DB.execute_query(query=search_query)
 
     @staticmethod
     def get_attrs(file=None):

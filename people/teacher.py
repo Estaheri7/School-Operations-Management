@@ -41,14 +41,14 @@ class Teacher(Person):
             self.department_id
         )
         try:
-            Teacher.DB.execute_query(query=query, params=values)
-            Teacher.DB.commit()
+            Person.DB.execute_query(query=query, params=values)
+            Person.DB.commit()
             print("Teacher added successfully!")
         except Exception as e:
             raise e
 
-    @classmethod
-    def remove_person(cls, person_code):
+    @staticmethod
+    def remove_person(person_code):
         """
         Removes a teacher record from database.
         If the selected teacher is enrolled in a class, the class record and
@@ -62,14 +62,14 @@ class Teacher(Person):
         """
 
         try:
-            cls.DB.execute_query(query=remove_query, params=(person_code,))
-            cls.DB.commit()
+            Person.DB.execute_query(query=remove_query, params=(person_code,))
+            Person.DB.commit()
             print(f"Teacher with code {person_code} removed!")
         except:
             print("Failed to remove teacher")
 
-    @classmethod
-    def update_teacher(cls, teacher_code, new_values):
+    @staticmethod
+    def update_teacher(teacher_code, new_values):
         """
         Updates records for teacher by given parameters.
 
@@ -85,8 +85,8 @@ class Teacher(Person):
         """
 
         try:
-            cls.DB.execute_query(query=update_query, params=new_values)
-            cls.DB.commit()
+            Person.DB.execute_query(query=update_query, params=new_values)
+            Person.DB.commit()
             print(f"Records updated for teacher with code {teacher_code}")
         except:
             print("Failed to update records")
@@ -124,8 +124,8 @@ class Teacher(Person):
             WHERE student_code = {student_code} AND class_code = {class_code}
             """
             try:
-                Teacher.DB.execute_query(query=update_query)
-                Teacher.DB.commit()
+                Person.DB.execute_query(query=update_query)
+                Person.DB.commit()
                 print("grade added successfully!")
             except:
                 print("Failed to add grade!")
@@ -149,7 +149,7 @@ class Teacher(Person):
         WHERE student_code = %s AND class_code = %s
         """
 
-        result = Teacher.DB.execute_query(query=search_query, params=(student_code, class_code))
+        result = Person.DB.execute_query(query=search_query, params=(student_code, class_code))
         return result
 
     @staticmethod
@@ -159,7 +159,7 @@ class Teacher(Person):
         WHERE teacher_code = {teacher_code}
         """
 
-        return Teacher.DB.execute_query(query=search_query)
+        return Person.DB.execute_query(query=search_query)
 
     @staticmethod
     def get_attrs(file=None):
@@ -234,4 +234,3 @@ class Teacher(Person):
         print("2 -> Search through your students.")
         print("3 -> Show grade plot of my students")
         print("0 -> log out")
-        

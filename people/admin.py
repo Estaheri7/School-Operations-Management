@@ -1,4 +1,4 @@
-from people.person import *
+from people.person import Person
 from people.student import Student
 from people.teacher import Teacher
 from education import Classroom, Course
@@ -25,7 +25,7 @@ class Admin(Person):
 
         :raise Exception: If admin cannot be added.
         """
-        
+
         add_query = """
         INSERT INTO admins(name, email, password, gender, admin_code)
         VALUES (%s, %s, %s, %s, %s)
@@ -39,8 +39,8 @@ class Admin(Person):
             self.admin_code
         )
         try:
-            Admin.DB.execute_query(query=add_query, params=values)
-            Admin.DB.commit()
+            Person.DB.execute_query(query=add_query, params=values)
+            Person.DB.commit()
             print("Admin added successfully!")
         except Exception as e:
             raise e

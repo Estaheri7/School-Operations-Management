@@ -1,5 +1,5 @@
 from databases import MySQLConnector, tables, create_database
-from people import Admin, Student, Teacher
+from people import Admin, Student, Teacher, Person
 from education import Classroom, Course
 from data.initialize_data import initialize_data
 from account_management import *
@@ -31,7 +31,7 @@ def main() -> None:
         pick = int(input("Enter 1 to register or 2 to login: "))
 
         if role == "student":
-            Student.DB = create_database.db
+            Person.DB = create_database.db
             current_student = None
             if pick == 1:
                 student = Student.get_attrs()
@@ -88,12 +88,14 @@ def main() -> None:
                 else:
                     print("Invalid command!")
         elif role == "teacher":
-            Teacher.DB = create_database.db
+            Person.DB = create_database.db
             current_teacher = None
             if pick == 1:
                 teacher = Teacher.get_attrs()
+                print("Going to if..")
                 if not AM.is_registered(teacher[0], teacher[0].teacher_code):
                     teacher[0].add_teacher()
+                    print("Added")
                     login = True
                     current_teacher = teacher[0]
                 else:
@@ -152,7 +154,7 @@ def main() -> None:
                 else:
                     print("Invalid command!")
         elif role == "admin":
-            Admin.DB = create_database.db
+            Person.DB = create_database.db
             if pick == 1:
                 name, email, password, gender, admin_code = Admin.enter_attrs()
                 admin = Admin(name, email, password, gender, admin_code)
