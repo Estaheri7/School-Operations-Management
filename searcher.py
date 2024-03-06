@@ -69,6 +69,8 @@ class Searcher:
         for enroll in enrolls:
             print("-"*10)
             classroom = Classroom.search_by_code(enroll[2])
+            student = Student.search_by_code(enroll[1])
+            print(f"Student name: {student[0][1]}")
             print(f"Enrolled in {classroom[0][1]} class with code {enroll[2]}")
             print(f"Grade in this classroom -> {enroll[3]}")
 
