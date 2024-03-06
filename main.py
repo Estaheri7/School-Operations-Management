@@ -4,6 +4,7 @@ from education import Classroom, Course
 from data.initialize_data import initialize_data
 from account_management import *
 from searcher import Searcher
+from data_report import DataReport
 
 
 def main() -> None:
@@ -130,6 +131,15 @@ def main() -> None:
                     for code in class_code:
                         condition = {"class_code": code}
                         Searcher.display_enrolled(Searcher.advanced_search("student_classes", condition))
+                elif choice == 3:
+                    report = DataReport(
+                        "Grade Distribution by Student Code",
+                        "Student Code",
+                        "Grade",
+                        figsize=(7, 7)
+                    )
+                    class_code = input("Enter your class code: ")
+                    report.visualize_grade_distribution(class_code, current_teacher.teacher_code)
                 else:
                     print("Invalid command!")
         elif role == "admin":
