@@ -71,6 +71,16 @@ class DataReport:
         plt.show()
 
     def visualize_enrollment_distribution(self):
+        """
+        Visualizes the distribution of current enrollment across all classrooms.
+
+        Retrieves the current enrollment data for all classrooms using the Searcher class.
+        Constructs a bar plot where each bar represents a classroom, with the height of the bar
+        indicating the current enrollment count for that classroom.
+
+        :return: None
+        """
+        
         classrooms = Searcher.advanced_search("classrooms")
         if not classrooms:
             print("Classrooms not found!")
