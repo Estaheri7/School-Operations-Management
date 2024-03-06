@@ -232,5 +232,6 @@ class Teacher(Person):
         print("Welcome")
         print("1 -> Add grade")
         print("2 -> Search through your students.")
+        print("3 -> Show grade plot of my students")
         print("0 -> log out")
         
