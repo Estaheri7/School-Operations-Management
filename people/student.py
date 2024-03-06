@@ -320,4 +320,5 @@ class Student(Person):
         print("Welcome!\n")
         print("1 -> Enroll to class")
         print("2 -> Remove your enrollment from class")
+        print("3 -> Show number of enrollments of classrooms")
         print("0 -> logout")
