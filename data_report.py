@@ -1,6 +1,7 @@
 from searcher import Searcher
 from education import Classroom
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 class DataReport:
@@ -80,7 +81,7 @@ class DataReport:
 
         :return: None
         """
-        
+
         classrooms = Searcher.advanced_search("classrooms")
         if not classrooms:
             print("Classrooms not found!")
@@ -94,4 +95,42 @@ class DataReport:
         plt.xlabel(self.xlabel)
         plt.ylabel(self.ylabel)
 
+        plt.show()
+
+    def analyze_teacher_workload(self):
+        """
+        Analyzes and visualizes the workload of teachers by calculating the number of courses and total students
+        per teacher. Utilizes pandas to perform calculations and matplotlib to visualize the workload.
+
+        :return: None
+        """
+
+        classrooms = Searcher.advanced_search("classrooms")
+        if not classrooms:
+            print("Classrooms not found!")
+            return
+
+        df = pd.DataFrame(classrooms,
+                          columns=['class_id', 'class_name', 'current_enrollment', 'class_code', 'course_code',
+                                   'teacher_code'])
+        
+        teacher_workload = df.groupby('teacher_code').agg(
+            {'course_code': 'nunique', 'current_enrollment': 'sum'}).reset_index()
+        teacher_workload.columns = ['teacher_code', 'num_courses', 'total_students']
+
+        teacher_names = {teacher[5]: teacher[1] for teacher in Searcher.advanced_search("teachers")}
+
+        teacher_workload['teacher_name'] = teacher_workload['teacher_code'].map(teacher_names)
+
+        plt.figure(figsize=self.figsize)
+        plt.bar(teacher_workload['teacher_name'], teacher_workload['num_courses'], color='blue',
+                label='Number of Courses')
+        plt.bar(teacher_workload['teacher_name'], teacher_workload['total_students'], color='orange',
+                label='Total Students')
+        plt.title(self.title)
+        plt.xlabel(self.xlabel)
+        plt.ylabel(self.ylabel)
+        plt.xticks(rotation=45, ha='right')
+        plt.legend()
+        plt.tight_layout()
         plt.show()
