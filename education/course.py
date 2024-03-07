@@ -161,7 +161,7 @@ class Course:
                     # add created object to created list
                     all_courses.append(new_course)
                 return all_courses
-            except FileNotFoundError:
+            except FileNotFoundError as e:
                 print("File not found!")
         name = input("Enter name: ")
         course_code = input("Enter course code: ")
