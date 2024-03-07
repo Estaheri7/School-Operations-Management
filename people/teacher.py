@@ -12,7 +12,7 @@ class Teacher(Person):
     such as adding, removing, or updating teacher records, adding grades for students in classes,
     searching for students enrolled in specific classes, and retrieving teacher attributes for creating Teacher objects.
     """
-    
+
     def __init__(self, name, email, password, gender, teacher_code, department_id):
         """
         Initializes the Teacher object with the provided parameters.
@@ -79,8 +79,9 @@ class Teacher(Person):
             Person.DB.execute_query(query=remove_query, params=(person_code,))
             Person.DB.commit()
             print(f"Teacher with code {person_code} removed!")
-        except:
+        except Exception as e:
             print("Failed to remove teacher")
+            raise e
 
     @staticmethod
     def update_teacher(teacher_code, new_values):
@@ -108,8 +109,9 @@ class Teacher(Person):
             Person.DB.execute_query(query=update_query, params=new_values)
             Person.DB.commit()
             print(f"Records updated for teacher with code {teacher_code}")
-        except:
+        except Exception as e:
             print("Failed to update records")
+            raise e
 
     def add_grade(self, student_code, class_code, new_grade):
         """
@@ -147,8 +149,9 @@ class Teacher(Person):
                 Person.DB.execute_query(query=update_query)
                 Person.DB.commit()
                 print("grade added successfully!")
-            except:
+            except Exception as e:
                 print("Failed to add grade!")
+                raise e
 
     @staticmethod
     def find_student_class(student_code, class_code):
@@ -168,9 +171,11 @@ class Teacher(Person):
         SELECT * FROM student_classes
         WHERE student_code = %s AND class_code = %s
         """
-
-        result = Person.DB.execute_query(query=search_query, params=(student_code, class_code))
-        return result
+        try:
+            result = Person.DB.execute_query(query=search_query, params=(student_code, class_code))
+            return result
+        except Exception as e:
+            raise e
 
     @staticmethod
     def search_by_code(teacher_code):
@@ -206,17 +211,23 @@ class Teacher(Person):
 
         if file:
             try:
+                # read teachers from csv file
                 teachers = pd.read_csv(file)
+                # declare empty list
                 all_teachers = []
+                # convert numpy int to mysql int
                 teachers["teacher_code"] = teachers["teacher_code"].astype(int)
                 teachers["department_id"] = teachers["department_id"].astype(int)
                 for _, teacher_data in teachers.iterrows():
+                    # checking if email is valid
                     if not AccountManager.is_valid_email(teacher_data["email"]):
                         print(f"Invalid email format for {teacher_data['email']}\nSkipped...")
                         continue
+                    # checking if password is valid
                     if not AccountManager.is_valid_password(teacher_data["password"]):
                         print(f"Invalid password format for {teacher_data['email']}\nSkipped...")
                         continue
+                    # create new teacher
                     new_teacher = Teacher(
                         teacher_data["name"],
                         teacher_data["email"],
@@ -225,16 +236,20 @@ class Teacher(Person):
                         teacher_data["teacher_code"],
                         teacher_data["department_id"]
                     )
+                    # add created object to created list
                     all_teachers.append(new_teacher)
                 return all_teachers
-            except FileNotFoundError:
+            except FileNotFoundError as e:
                 print("File not found!")
+                raise e
 
         name = input("Enter name: ")
         email = input("Enter email: ")
+        # checking if email is valid
         while not AccountManager.is_valid_email(email):
             email = input("Invalid email format! try another: ")
         password = input("Enter password: ")
+        # checking is password is valid
         while not AccountManager.is_valid_password(password):
             print("1 - Password should be at least 9 characters")
             print("2 - Password should have number and alphabet too")
