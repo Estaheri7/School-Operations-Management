@@ -27,14 +27,17 @@ class AccountManager:
         :return: True if the person is registered, False otherwise.
         """
 
+        # Finding class of given person
         person_type = type(person).__name__.lower()
 
+        # Searching through given person class table
         search_query = f"""
         SELECT * FROM {person_type + "s"}
         WHERE email = %s OR {person_type}_code = %s
         """
 
         try:
+            # Get data from database
             result = self.database.execute_query(query=search_query, params=(person.email, person_code))
             return result
         except Exception as e:
@@ -52,6 +55,7 @@ class AccountManager:
         :return: True if login is successful, False otherwise.
         """
 
+        # Searching for person through given table by email and password
         search_query = f"""
         SELECT * FROM {person + "s"}
         WHERE email = %s AND password = %s
