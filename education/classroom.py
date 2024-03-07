@@ -4,6 +4,14 @@ import json
 
 
 class Classroom:
+    """
+    A class representing a classroom in a school, including methods to add, remove, update, and search for classrooms
+    in the database.
+
+    Attributes:
+        DB (MySQLConnector): A MySQLConnector object for interacting with the database.
+    """
+    # connect class attribute DB to database
     with open("databases/db_info.json", "r") as file:
         db_info = json.load(file)
     DB = MySQLConnector(**db_info)
@@ -46,6 +54,7 @@ class Classroom:
             Classroom.DB.commit()
             print("Classroom added successfully!")
         except Exception as e:
+            print("Failed to add classroom")
             raise e
 
     @classmethod
@@ -65,8 +74,9 @@ class Classroom:
             cls.DB.execute_query(query=remove_query, params=(class_code,))
             cls.DB.commit()
             print(f"Classroom with code {class_code} removed!")
-        except:
+        except Exception as e:
             print("Failed to delete classroom!")
+            raise e
 
     @classmethod
     def update_classroom(cls, class_code, new_values):
@@ -88,8 +98,9 @@ class Classroom:
             cls.DB.execute_query(query=update_query, params=new_values)
             cls.DB.commit()
             print(f"Records updated for classroom with code {class_code}")
-        except:
+        except Exception as e:
             print("Failed to update records")
+            raise e
 
     @classmethod
     def search_by_code(cls, class_code):
@@ -112,8 +123,9 @@ class Classroom:
         try:
             result = cls.DB.execute_query(query=search_query)
             return result
-        except:
+        except Exception as e:
             print("Something went wrong while searching...")
+            raise e
 
     @staticmethod
     def get_attrs(file=None):
@@ -129,13 +141,17 @@ class Classroom:
 
         if file:
             try:
+                # read classrooms from csv file
                 classrooms = pd.read_csv(file)
+                # empty list to collect classrooms
                 all_classrooms = []
+                # convert numpy int variables to mysql int
                 classrooms["current_enrollment"] = classrooms["current_enrollment"].astype(int)
                 classrooms["class_code"] = classrooms["class_code"].astype(int)
                 classrooms["course_code"] = classrooms["course_code"].astype(int)
                 classrooms["teacher_code"] = classrooms["teacher_code"].astype(int)
                 for _, classroom_data in classrooms.iterrows():
+                    # create object
                     new_classroom = Classroom(
                         classroom_data["name"],
                         classroom_data["current_enrollment"],
@@ -143,9 +159,10 @@ class Classroom:
                         classroom_data["course_code"],
                         classroom_data["teacher_code"]
                     )
+                    # add created object to empty list
                     all_classrooms.append(new_classroom)
                 return all_classrooms
-            except FileNotFoundError:
+            except FileNotFoundError as e:
                 print("File not found!")
 
         class_name = input("Enter name: ")
