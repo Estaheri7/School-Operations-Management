@@ -6,6 +6,15 @@ from account_management import AccountManager
 
 
 class Admin(Person):
+    """
+    A class representing an administrator in the school system. Admins have the authority
+    to perform various actions related to managing students, teachers, classrooms, courses,
+    and accounts.
+
+    Attributes:
+        DB (MySQLConnector): A MySQLConnector object for interacting with the database.
+    """
+
     def __init__(self, name, email, password, gender, admin_code):
         """
         Initializes the Admin object with the provided parameters.
@@ -104,7 +113,10 @@ class Admin(Person):
                 file = None
             students = Student.get_attrs(file)
             for student in students:
-                student.add_student()
+                try:
+                    student.add_student()
+                except:
+                    print("Failed to add student\nSkipping...")
         elif method == "remove":
             student_code = input("Enter student code to remove student: ")
             Student.remove_person(student_code)
@@ -143,7 +155,10 @@ class Admin(Person):
                 file = None
             teachers = Teacher.get_attrs(file)
             for teacher in teachers:
-                teacher.add_teacher()
+                try:
+                    teacher.add_teacher()
+                except:
+                    print("Failed to add teacher\nSkipping...")
         elif method == "remove":
             teacher_code = input("Enter teacher code to remove teacher: ")
             Teacher.remove_person(teacher_code)
@@ -184,7 +199,10 @@ class Admin(Person):
                 file = None
             classrooms = Classroom.get_attrs(file)
             for classroom in classrooms:
-                classroom.add_classroom()
+                try:
+                    classroom.add_classroom()
+                except:
+                    print("Failed to add classroom\nSkipping...")
         elif method == "remove":
             class_code = input("Enter classroom code to remove classroom: ")
             Classroom.remove_classroom(class_code)
@@ -226,7 +244,10 @@ class Admin(Person):
                 file = None
             courses = Course.get_attrs(file)
             for course in courses:
-                course.add_course()
+                try:
+                    course.add_course()
+                except:
+                    print("Failed to add course\nSkipping...")
         elif method == "remove":
             course_code = input("Enter course code to remove course: ")
             Course.remove_course(course_code)
