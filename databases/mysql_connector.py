@@ -1,9 +1,22 @@
 import mysql.connector
 from mysql.connector import Error
-from databases.table_queries import tables
 
 
 class MySQLConnector:
+    """
+    A class for connecting to a MySQL server, creating databases and tables, executing queries,
+    and managing transactions.
+
+    Attributes:
+        host (str): The hostname or IP address of the MySQL server.
+        user (str): The username for authentication.
+        password (str): The password for authentication.
+        db_name (str): The name of the database to connect to. If not provided, connects to the MySQL server
+                       without selecting any database.
+        db (mysql.connector.connection.MySQLConnection): The connection object to the MySQL server.
+        cursor (mysql.connector.cursor.MySQLCursor): The cursor object for executing SQL statements.
+    """
+    
     def __init__(self, host, user, password, db_name=None):
         """
         Initializes the MySQLConnector object with the provided parameters and
