@@ -28,21 +28,36 @@ def initialize_data(classrooms, courses, teachers, students, admins):
             t["teacher_code"],
             t["department_id"]
         )
-        teacher.add_teacher()
+        try:
+            teacher.add_teacher()
+        except:
+            pass
 
     for c in courses:
         course = Course(c["name"], c["course_code"], c["capacity"])
-        course.add_course()
+        try:
+            course.add_course()
+        except:
+            pass
 
     for r in classrooms:
         classroom = Classroom(r["name"], r["current_enrollment"],
                               r["class_code"], r["course_code"], r["teacher_code"])
-        classroom.add_classroom()
+        try:
+            classroom.add_classroom()
+        except:
+            pass
 
     for s in students:
         student = Student(s["name"], s["email"], s["password"], s["gender"], s["student_code"])
-        student.add_student()
+        try:
+            student.add_student()
+        except:
+            pass
 
     for a in admins:
         admin = Admin(a["name"], a["email"], a["password"], a["gender"], a["admin_code"])
-        admin.add_admin()
+        try:
+            admin.add_admin()
+        except:
+            pass
