@@ -5,6 +5,14 @@ import pandas as pd
 
 
 class Teacher(Person):
+    """
+    Represents a teacher within the school system.
+
+    Inherits from the Person class and provides additional functionality related to teacher operations
+    such as adding, removing, or updating teacher records, adding grades for students in classes,
+    searching for students enrolled in specific classes, and retrieving teacher attributes for creating Teacher objects.
+    """
+    
     def __init__(self, name, email, password, gender, teacher_code, department_id):
         """
         Initializes the Teacher object with the provided parameters.
