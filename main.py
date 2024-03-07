@@ -9,16 +9,13 @@ from data_report import DataReport
 
 def main() -> None:
     database = create_database.db
-    try:
-        initialize_data(
-            r"data\classrooms.json",
-            r"data\courses.json",
-            r"data\teachers.json",
-            r"data\students.json",
-            r"data\admins.json"
-        )
-    except:
-        pass
+    initialize_data(
+        r"data\classrooms.json",
+        r"data\courses.json",
+        r"data\teachers.json",
+        r"data\students.json",
+        r"data\admins.json"
+    )
 
     AM = AccountManager(database)
 
