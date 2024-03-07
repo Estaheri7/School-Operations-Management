@@ -340,9 +340,11 @@ class Student(Person):
 
         name = input("Enter name: ")
         email = input("Enter email: ")
+        # checking if email is valid
         while not AccountManager.is_valid_email(email):
             email = input("Invalid email format! try another: ")
         password = input("Enter password: ")
+        # checking if password is valid
         while not AccountManager.is_valid_password(password):
             print("1 - Password should be at least 9 characters")
             print("2 - Password should have number and alphabet too")
