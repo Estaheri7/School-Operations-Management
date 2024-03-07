@@ -4,6 +4,15 @@ import json
 
 
 class Course:
+    """
+    A class representing a course in a school, including methods to add, remove, update, and search for courses
+    in the database.
+
+    Attributes:
+        DB (MySQLConnector): A MySQLConnector object for interacting with the database.
+    """
+
+    # connect class attribute DB to database
     with open("databases/db_info.json", "r") as file:
         db_info = json.load(file)
     DB = MySQLConnector(**db_info)
@@ -36,6 +45,7 @@ class Course:
             Course.DB.commit()
             print("Course added successfully!")
         except Exception as e:
+            print("Failed to add course")
             raise e
 
     @classmethod
@@ -56,8 +66,9 @@ class Course:
             cls.DB.execute_query(query=remove_query, params=(course_code,))
             cls.DB.commit()
             print(f"Course with code {course_code} removed!")
-        except:
+        except Exception as e:
             print("Failed to remove course!")
+            raise e
 
     @classmethod
     def update_course(cls, course_code, new_values):
@@ -79,8 +90,9 @@ class Course:
             cls.DB.execute_query(query=update_query, params=new_values)
             cls.DB.commit()
             print(f"Records updated for course with code {course_code}")
-        except:
+        except Exception as e:
             print("Failed to update course")
+            raise e
 
     @classmethod
     def search_by_code(cls, course_code):
@@ -103,8 +115,9 @@ class Course:
         try:
             result = cls.DB.execute_query(query=search_query)
             return result
-        except:
+        except Exception as e:
             print("Something went wrong while searching...")
+            raise e
 
     @staticmethod
     def get_attrs(file=None):
@@ -120,16 +133,21 @@ class Course:
         
         if file:
             try:
+                # read courses csv file using pandas
                 courses = pd.read_csv(file)
+                # an empty list to collect courses
                 all_courses = []
+                # convert numpy int to mysql int
                 courses["course_code"] = courses["course_code"].astype(int)
                 courses["capacity"] = courses["capacity"].astype(int)
                 for _, course_data in courses.iterrows():
+                    # create course object
                     new_course = Course(
                         course_data["name"],
                         course_data["course_code"],
                         course_data["capacity"],
                     )
+                    # add created object to created list
                     all_courses.append(new_course)
                 return all_courses
             except FileNotFoundError:
