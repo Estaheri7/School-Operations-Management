@@ -54,7 +54,6 @@ class Classroom:
             Classroom.DB.commit()
             print("Classroom added successfully!")
         except Exception as e:
-            print("Failed to add classroom")
             raise e
 
     @classmethod
@@ -65,6 +64,12 @@ class Classroom:
 
         :param class_code: A unique code selected to remove classroom.
         """
+
+        # Searching for classroom...
+        result = Classroom.search_by_code(class_code)
+        if not result:
+            print("Classroom not found!")
+            return
 
         remove_query = """
         DELETE FROM classrooms WHERE class_code = (%s)
@@ -87,6 +92,12 @@ class Classroom:
         :param new_values: A tuple containing the new values for the classroom attributes
                            in the following order: (name, current_enrollment, course_code, teacher_code).
         """
+
+        # Searching for classroom...
+        result = Classroom.search_by_code(class_code)
+        if not result:
+            print("Classroom not found!")
+            return
 
         update_query = f"""
         UPDATE classrooms

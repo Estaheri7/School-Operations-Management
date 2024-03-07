@@ -57,6 +57,12 @@ class Teacher(Person):
         :param person_code: A unique code to remove teacher.
         """
 
+        # Searching for teacher...
+        result = Teacher.search_by_code(person_code)
+        if not result:
+            print("Teacher not found!")
+            return
+
         remove_query = """
         DELETE FROM teachers WHERE teacher_code = (%s)
         """
@@ -77,6 +83,12 @@ class Teacher(Person):
         :param new_values: A tuple containing the new values for the teacher attributes
                            in the following order: (name, password, department_id).
         """
+
+        # Searching for teacher...
+        result = Teacher.search_by_code(teacher_code)
+        if not result:
+            print("Teacher not found!")
+            return
 
         update_query = f"""
         UPDATE teachers

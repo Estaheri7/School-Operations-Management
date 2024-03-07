@@ -45,7 +45,6 @@ class Course:
             Course.DB.commit()
             print("Course added successfully!")
         except Exception as e:
-            print("Failed to add course")
             raise e
 
     @classmethod
@@ -57,6 +56,12 @@ class Course:
 
         :param course_code: A unique code to remove a course.
         """
+
+        # Searching for course...
+        result = Course.search_by_code(course_code)
+        if not result:
+            print("Course not found!")
+            return
 
         remove_query = """
         DELETE FROM courses WHERE course_code = (%s)
@@ -79,7 +84,13 @@ class Course:
         :param new_values: A tuple containing the new values for the course attributes
                            in the following order: (name, capacity).
         """
-        
+
+        # Searching for course...
+        result = Course.search_by_code(course_code)
+        if not result:
+            print("Course not found!")
+            return
+
         update_query = f"""
         UPDATE courses
         SET name = %s, capacity = %s
