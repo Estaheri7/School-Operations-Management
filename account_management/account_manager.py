@@ -41,7 +41,7 @@ class AccountManager:
             result = self.database.execute_query(query=search_query, params=(person.email, person_code))
             return result
         except Exception as e:
-            print("Something went wrong while registering...")
+            print("Something went wrong while checking registering...")
             return False
 
     def can_login(self, person, email, password):
