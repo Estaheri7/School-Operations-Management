@@ -2,6 +2,13 @@ import re
 
 
 class AccountManager:
+    """
+    A class responsible for managing user accounts and authentication.
+
+    Attributes:
+        database: A MySQLConnector object connected to the school database.
+    """
+
     def __init__(self, database):
         """
         Initializes AccountManager object with given database.
@@ -27,8 +34,12 @@ class AccountManager:
         WHERE email = %s OR {person_type}_code = %s
         """
 
-        result = self.database.execute_query(query=search_query, params=(person.email, person_code))
-        return result
+        try:
+            result = self.database.execute_query(query=search_query, params=(person.email, person_code))
+            return result
+        except Exception as e:
+            print("Something went wrong while registering...")
+            return False
 
     def can_login(self, person, email, password):
         """
@@ -46,8 +57,12 @@ class AccountManager:
         WHERE email = %s AND password = %s
         """
 
-        result = self.database.execute_query(query=search_query, params=(email, password))
-        return result
+        try:
+            result = self.database.execute_query(query=search_query, params=(email, password))
+            return result
+        except Exception as e:
+            print("Something went wrong while login in...")
+            return False
 
     @staticmethod
     def is_valid_email(email):
