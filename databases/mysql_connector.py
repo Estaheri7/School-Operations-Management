@@ -16,7 +16,7 @@ class MySQLConnector:
         db (mysql.connector.connection.MySQLConnection): The connection object to the MySQL server.
         cursor (mysql.connector.cursor.MySQLCursor): The cursor object for executing SQL statements.
     """
-    
+
     def __init__(self, host, user, password, db_name=None):
         """
         Initializes the MySQLConnector object with the provided parameters and
@@ -42,13 +42,16 @@ class MySQLConnector:
 
         :raises Error: if connection fails.
         """
+
         try:
+            # connecting db attribute to database with given attributes
             self.db = mysql.connector.connect(
                 host=self.host,
                 user=self.user,
                 password=self.password,
                 database=self.db_name
             )
+            # create cursor object
             self.cursor = self.db.cursor()
         except Error as e:
             raise e
@@ -63,8 +66,11 @@ class MySQLConnector:
         try:
             query = f"CREATE DATABASE IF NOT EXISTS {name}"
 
+            # create database using cursor
             self.cursor.execute(query)
+            # set database attribute for db object to given name
             self.db.database = name
+            # set db_name attribute to given name
             self.db_name = name
         except Error as e:
             raise e
@@ -77,6 +83,7 @@ class MySQLConnector:
         :raises Error: If table creation query execution fails.
         """
         try:
+            # execute the table query
             self.cursor.execute(query)
         except Error as e:
             raise e
@@ -87,6 +94,7 @@ class MySQLConnector:
 
         :param table_queries: A dictionary with table names as keys and corresponding table queries as values.
         """
+        # creating tables using given queries and create_table method
         for query in table_queries.values():
             self.create_table(query)
 
@@ -100,7 +108,9 @@ class MySQLConnector:
                  Otherwise, returns None.
         """
         try:
+            # execute query for given parameters or None by default
             self.cursor.execute(query, params or ())
+            # if executed query has result then return the result
             if self.cursor.with_rows:
                 return self.cursor.fetchall()
         except Error as e:
