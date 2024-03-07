@@ -12,7 +12,7 @@ class Student(Person):
     such as adding, removing, or updating student records, enrolling or removing enrollment from classes,
     searching for students by their unique code, and retrieving student attributes for creating Student objects.
     """
-    
+
     def __init__(self, name, email, password, gender, student_code):
         """
         Initializes the Student object with the provided parameters.
@@ -78,7 +78,7 @@ class Student(Person):
             Person.DB.commit()
             print(f"Student with code {person_code} removed!")
         except Exception as e:
-            print("Something went wrong while adding student")
+            print("Something went wrong while removing student")
             raise e
 
     @staticmethod
@@ -107,8 +107,9 @@ class Student(Person):
             Person.DB.execute_query(query=update_query, params=new_values)
             Person.DB.commit()
             print(f"Records updated for student with code {student_code}")
-        except:
-            print("Failed to update records")
+        except Exception as e:
+            print("Something went wrong while updating records")
+            raise e
 
     def enroll(self, class_code):
         """
@@ -142,8 +143,9 @@ class Student(Person):
                 Person.DB.execute_query(query=enroll_query, params=(self.student_code, class_code))
                 Person.DB.commit()
                 print(msg)
-            except:
+            except Exception as e:
                 print("Failed to enroll class")
+                raise e
         else:
             print(msg)
 
@@ -178,8 +180,9 @@ class Student(Person):
                 Person.DB.execute_query(query=delete_query)
                 Person.DB.commit()
                 print(msg)
-            except:
+            except Exception as e:
                 print("Failed to delete enrollment!")
+                raise e
         else:
             print(msg)
 
@@ -205,7 +208,7 @@ class Student(Person):
         try:
             result = Person.DB.execute_query(query=search_query, params=(student_code, class_code))
             return result
-        except:
+        except Exception as e:
             print("Something went wrong when enrolling.")
             return None
 
@@ -248,17 +251,24 @@ class Student(Person):
             WHERE class_code = {classroom[0][3]}
             """
 
-            Person.DB.execute_query(query=update_query)
-            Person.DB.commit()
+            try:
+                Person.DB.execute_query(query=update_query)
+                Person.DB.commit()
+            except Exception as e:
+                print("Something went wrong while enrolling...")
+                raise e
         elif current_enrollment > 0 and method == "delete":
             update_query = f"""
             UPDATE classrooms
             SET current_enrollment = current_enrollment - 1
             WHERE class_code = {classroom[0][3]}
             """
-
-            Person.DB.execute_query(query=update_query)
-            Person.DB.commit()
+            try:
+                Person.DB.execute_query(query=update_query)
+                Person.DB.commit()
+            except Exception as e:
+                print("Something went wrong while canceling enrollment")
+                raise e
         elif current_enrollment == 0 and method == "delete":
             return False, "Selected class does not have enrollment at all!"
         else:
@@ -298,17 +308,23 @@ class Student(Person):
         """
 
         if file:
+            # declare empty list for students
             all_students = []
             try:
+                # read students from csv file
                 students = pd.read_csv(file)
+                # convert numpy int to mysql int
                 students["student_code"] = students["student_code"].astype(int)
                 for _, student_data in students.iterrows():
+                    # checking if given email is valid
                     if not AccountManager.is_valid_email(student_data["email"]):
                         print(f"Invalid email format for {student_data['email']}\nSkipped...")
                         continue
+                    # checking if given password is valid
                     if not AccountManager.is_valid_password(student_data["password"]):
                         print(f"Invalid password format for {student_data['email']}\nSkipped...")
                         continue
+                    # create new student object
                     new_student = Student(
                         student_data["name"],
                         student_data["email"],
@@ -316,9 +332,10 @@ class Student(Person):
                         student_data["gender"],
                         student_data["student_code"]
                     )
+                    # add created object to created list
                     all_students.append(new_student)
                 return all_students
-            except FileNotFoundError:
+            except FileNotFoundError as e:
                 print("File not found!")
 
         name = input("Enter name: ")
