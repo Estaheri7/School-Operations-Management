@@ -46,34 +46,37 @@ class DataReport:
             ValueError: If the specified classroom or teacher is not found.
         """
 
-        # checking if given class_code exists
-        result = Classroom.search_by_code(class_code)
-        if not result:
-            print("Classroom not found!")
-            return
+        try:
+            # checking if given class_code exists
+            result = Classroom.search_by_code(class_code)
+            if not result:
+                print("Classroom not found!")
+                return
 
-        # checking if teacher who sent class code owns the class
-        if teacher_code != result[0][5]:
-            print("You don't own this classroom!")
-            return
+            # checking if teacher who sent class code owns the class
+            if teacher_code != result[0][5]:
+                print("You don't own this classroom!")
+                return
 
-        # retrieve enrollment data for the class
-        enrolls = Searcher.advanced_search("student_classes", {"class_code": class_code})
-        if not enrolls:
-            print("Enrolls not found!")
-            return
-        student_codes = [str(enroll[1]) for enroll in enrolls]
-        grades = [enroll[3] if enroll[3] is not None else 0 for enroll in enrolls]
+            # retrieve enrollment data for the class
+            enrolls = Searcher.advanced_search("student_classes", {"class_code": class_code})
+            if not enrolls:
+                print("Enrolls not found!")
+                return
+            student_codes = [str(enroll[1]) for enroll in enrolls]
+            grades = [enroll[3] if enroll[3] is not None else 0 for enroll in enrolls]
 
-        # create scatter plot for grade distribution
-        plt.figure(figsize=self.figsize)
-        plt.scatter(student_codes, grades, color=self.color, alpha=0.5)
-        plt.title(self.title)
-        plt.xlabel(self.xlabel)
-        plt.ylabel(self.ylabel)
-        plt.grid(True)
+            # create scatter plot for grade distribution
+            plt.figure(figsize=self.figsize)
+            plt.scatter(student_codes, grades, color=self.color, alpha=0.5)
+            plt.title(self.title)
+            plt.xlabel(self.xlabel)
+            plt.ylabel(self.ylabel)
+            plt.grid(True)
 
-        plt.show()
+            plt.show()
+        except Exception as e:
+            raise e
 
     def visualize_enrollment_distribution(self):
         """
@@ -86,25 +89,28 @@ class DataReport:
         :return: None
         """
 
-        # search for classroom if exists...
-        classrooms = Searcher.advanced_search("classrooms")
-        if not classrooms:
-            print("Classrooms not found!")
-            return
+        try:
+            # search for classroom if exists...
+            classrooms = Searcher.advanced_search("classrooms")
+            if not classrooms:
+                print("Classrooms not found!")
+                return
 
-        # collecting class_codes
-        class_codes = [str(enrollment[3]) for enrollment in classrooms]
-        # collecting enrollment numbers
-        current_enrollments = [str(enrollment[2]) for enrollment in classrooms]
+            # collecting class_codes
+            class_codes = [str(enrollment[3]) for enrollment in classrooms]
+            # collecting enrollment numbers
+            current_enrollments = [str(enrollment[2]) for enrollment in classrooms]
 
-        # create bar plot for enrollment distribution
-        plt.figure(figsize=self.figsize)
-        plt.bar(class_codes, current_enrollments, color=self.color)
-        plt.title(self.title)
-        plt.xlabel(self.xlabel)
-        plt.ylabel(self.ylabel)
+            # create bar plot for enrollment distribution
+            plt.figure(figsize=self.figsize)
+            plt.bar(class_codes, current_enrollments, color=self.color)
+            plt.title(self.title)
+            plt.xlabel(self.xlabel)
+            plt.ylabel(self.ylabel)
 
-        plt.show()
+            plt.show()
+        except Exception as e:
+            raise e
 
     def analyze_teacher_workload(self):
         """
@@ -113,7 +119,7 @@ class DataReport:
 
         :return: None
         """
-        
+
         try:
             # searching for classroom if exists...
             classrooms = Searcher.advanced_search("classrooms")
