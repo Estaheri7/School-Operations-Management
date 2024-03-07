@@ -5,6 +5,13 @@ import json
 
 
 class Searcher:
+    """
+    A utility class for performing advanced searches and displaying data from various database tables.
+
+    Attributes:
+        DB (MySQLConnector): An instance of MySQLConnector for executing queries on the database.
+    """
+    
     with open("databases/db_info.json", "r") as file:
         db_info = json.load(file)
     DB = MySQLConnector(**db_info)
