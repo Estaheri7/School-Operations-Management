@@ -48,20 +48,22 @@ class Student(Person):
     def remove_person(person_code):
         """
         Removes a student record from database.
+
         If a selected student is enrolled in a class, their record will be removed from
         the student_classes table.
 
         :param person_code: A unique code to remove student.
         """
 
-        remove_query = """
-        DELETE FROM students WHERE student_code = (%s)
-        """
-
+        # Searching if student exists...
         result = Student.search_by_code(person_code)
         if not result:
             print("Student not found!")
             return
+
+        remove_query = """
+        DELETE FROM students WHERE student_code = (%s)
+        """
 
         try:
             Person.DB.execute_query(query=remove_query, params=(person_code,))
@@ -80,6 +82,12 @@ class Student(Person):
         :param new_values: A tuple containing the new values for the student attributes
                            in the following order: (name, password).
         """
+
+        # Searching if student exists...
+        result = Student.search_by_code(student_code)
+        if not result:
+            print("Student not found!")
+            return
 
         update_query = f"""
         UPDATE students
