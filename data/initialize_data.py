@@ -2,6 +2,9 @@ import json
 from education import Classroom, Course
 from people import Teacher, Student, Admin
 
+# This file only initializes data for testing program.
+# initialize_data reads json files in this data folder and then uses method to add them to database
+
 
 def initialize_data(classrooms, courses, teachers, students, admins):
     with open(classrooms, "r") as file:
