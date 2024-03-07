@@ -58,12 +58,18 @@ class Student(Person):
         DELETE FROM students WHERE student_code = (%s)
         """
 
+        result = Student.search_by_code(person_code)
+        if not result:
+            print("Student not found!")
+            return
+
         try:
             Person.DB.execute_query(query=remove_query, params=(person_code,))
             Person.DB.commit()
             print(f"Student with code {person_code} removed!")
-        except:
-            print("Failed to remove Student")
+        except Exception as e:
+            print("Something went wrong while adding student")
+            raise e
 
     @staticmethod
     def update_student(student_code, new_values):
