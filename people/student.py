@@ -5,6 +5,14 @@ import pandas as pd
 
 
 class Student(Person):
+    """
+    Represents a student in the school system.
+
+    Inherits from the Person class and provides additional functionality related to student operations
+    such as adding, removing, or updating student records, enrolling or removing enrollment from classes,
+    searching for students by their unique code, and retrieving student attributes for creating Student objects.
+    """
+    
     def __init__(self, name, email, password, gender, student_code):
         """
         Initializes the Student object with the provided parameters.
