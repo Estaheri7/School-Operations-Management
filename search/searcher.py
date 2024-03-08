@@ -1,6 +1,7 @@
 from education import Classroom, Course
 from people import Student, Admin, Teacher
 from databases import MySQLConnector, create_database
+from logger import Logger
 import json
 
 
@@ -15,6 +16,8 @@ class Searcher:
     with open("databases/db_info.json", "r") as file:
         db_info = json.load(file)
     DB = MySQLConnector(**db_info)
+
+    logger = Logger()
 
     @staticmethod
     def advanced_search(table, criteria=None):
@@ -49,7 +52,8 @@ class Searcher:
         try:
             result = Searcher.DB.execute_query(query=search_query)
             return result
-        except:
+        except Exception as e:
+            Searcher.logger.log(f"Error while searching: {e}")
             print(f"Search failed")
             return None
 
