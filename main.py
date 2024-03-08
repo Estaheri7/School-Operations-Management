@@ -6,6 +6,42 @@ from search import Searcher
 from reports import DataReport
 
 
+def get_integer_input(prompt):
+    """
+    Get integer input from the user with error handling for invalid input.
+
+    Args:
+        prompt (str): The prompt message for the user.
+
+    Returns:
+        int: The integer input provided by the user.
+    """
+    while True:
+        try:
+            value = int(input(prompt))
+            return value
+        except ValueError:
+            print("Invalid input! Please enter a valid integer!")
+
+
+def get_float_input(prompt):
+    """
+    Get float input from the user with error handling for invalid input.
+
+    Args:
+        prompt (str): The prompt message for the user.
+
+    Returns:
+        float: The float input provided by the user.
+    """
+    while True:
+        try:
+            value = float(input(prompt))
+            return value
+        except ValueError:
+            print("Invalid input! Please enter a valid float number!")
+
+
 def main() -> None:
     database = create_database.db
     initialize_data(
@@ -24,7 +60,7 @@ def main() -> None:
         if role == "-1":
             break
 
-        pick = int(input("Enter 1 to register or 2 to login: "))
+        pick = get_integer_input("Enter 1 to register or 2 to login: ")
 
         if role == "student":
             Person.DB = create_database.db
@@ -57,7 +93,7 @@ def main() -> None:
                 print("Invalid command!")
             while login:
                 Student.help()
-                choice = int(input())
+                choice = get_integer_input("> ")
                 if choice == 0:
                     login = False
                     break
@@ -117,17 +153,17 @@ def main() -> None:
                 print("Invalid command!")
             while login:
                 Teacher.help()
-                choice = int(input())
+                choice = get_integer_input("> ")
                 if choice == 0:
                     login = False
                     break
                 if choice == 1:
                     student_code = input("Enter student code: ")
                     class_code = input("Enter class code: ")
-                    new_grade = int(input("Enter grade: "))
+                    new_grade = get_float_input("Enter grade: ")
                     while new_grade < 0 or new_grade > 20:
                         print("Invalid value for grade!")
-                        new_grade = int(input("Grade must be between 0 and 20: "))
+                        new_grade = get_float_input("Grade must be between 0 and 20: ")
                     current_teacher.add_grade(student_code, class_code, new_grade)
                 elif choice == 2:
                     conditions = {"teacher_code": current_teacher.teacher_code}
@@ -173,7 +209,7 @@ def main() -> None:
                 print("Invalid command!")
             while login:
                 Admin.help()
-                choice = int(input())
+                choice = get_integer_input("> ")
                 if choice == 0:
                     login = False
                     break
