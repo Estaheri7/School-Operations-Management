@@ -56,6 +56,8 @@ def main() -> None:
 
     login = False
     while True:
+        print("Welcome\n")
+
         role = input("Select your role (Student, Teacher, Admin) or -1 to exit: ").lower()
         if role == "-1":
             break
