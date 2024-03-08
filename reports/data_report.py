@@ -1,4 +1,4 @@
-from searcher import Searcher
+from search import Searcher
 from education import Classroom
 import matplotlib.pyplot as plt
 import pandas as pd
