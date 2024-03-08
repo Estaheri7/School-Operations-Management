@@ -152,6 +152,8 @@ class Teacher(Person):
             except Exception as e:
                 Person.logger.log(f"Error while adding grade: {e}")
                 print("Failed to add grade!")
+        else:
+            print("Enrollment not found!")
 
     @staticmethod
     def find_student_class(student_code, class_code):
