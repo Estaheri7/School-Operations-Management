@@ -18,7 +18,19 @@ class Logger:
             log_dir (str, optional): The directory where log files will be stored. Defaults to "logs".
         """
         self.log_dir = log_dir
+        self.create_log_directory()
         self.configure_logging()
+
+    def create_log_directory(self):
+        """
+        Creates the logs directory and error.log file if they do not exist.
+        """
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
+        error_log_path = os.path.join(self.log_dir, "error.log")
+        if not os.path.exists(error_log_path):
+            with open(error_log_path, 'w'):
+                pass
 
     def configure_logging(self):
         """
