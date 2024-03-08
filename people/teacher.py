@@ -53,7 +53,7 @@ class Teacher(Person):
             Person.DB.commit()
             print("Teacher added successfully!")
         except Exception as e:
-            raise e
+            Person.logger.log(f"Error while adding teacher: {e}")
 
     @staticmethod
     def remove_person(person_code):
@@ -80,8 +80,8 @@ class Teacher(Person):
             Person.DB.commit()
             print(f"Teacher with code {person_code} removed!")
         except Exception as e:
+            Person.logger.log(f"Error while removing teacher: {e}")
             print("Failed to remove teacher")
-            raise e
 
     @staticmethod
     def update_teacher(teacher_code, new_values):
@@ -110,8 +110,8 @@ class Teacher(Person):
             Person.DB.commit()
             print(f"Records updated for teacher with code {teacher_code}")
         except Exception as e:
+            Person.logger.log(f"Error while updating teacher: {e}")
             print("Failed to update records")
-            raise e
 
     def add_grade(self, student_code, class_code, new_grade):
         """
@@ -150,8 +150,8 @@ class Teacher(Person):
                 Person.DB.commit()
                 print("grade added successfully!")
             except Exception as e:
+                Person.logger.log(f"Error while adding grade: {e}")
                 print("Failed to add grade!")
-                raise e
 
     @staticmethod
     def find_student_class(student_code, class_code):
@@ -175,7 +175,7 @@ class Teacher(Person):
             result = Person.DB.execute_query(query=search_query, params=(student_code, class_code))
             return result
         except Exception as e:
-            raise e
+            Person.logger.log(f"Error while searching for student classes: {e}")
 
     @staticmethod
     def search_by_code(teacher_code):
@@ -240,8 +240,8 @@ class Teacher(Person):
                     all_teachers.append(new_teacher)
                 return all_teachers
             except FileNotFoundError as e:
+                Person.logger.log(f"CSV file not found: {e}")
                 print("File not found!")
-                raise e
 
         name = input("Enter name: ")
         email = input("Enter email: ")
