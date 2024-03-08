@@ -68,7 +68,7 @@ tables = {
     student_class_id INT NOT NULL AUTO_INCREMENT,
     student_code INT NOT NULL,
     class_code INT NOT NULL,
-    grade INT,
+    grade FLOAT,
     PRIMARY KEY (student_class_id),
     FOREIGN KEY (student_code) REFERENCES students (student_code)
         ON DELETE CASCADE,
