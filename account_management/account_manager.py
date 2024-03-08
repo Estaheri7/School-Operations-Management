@@ -1,4 +1,5 @@
 import re
+from logger import Logger
 
 
 class AccountManager:
@@ -8,6 +9,8 @@ class AccountManager:
     Attributes:
         database: A MySQLConnector object connected to the school database.
     """
+
+    logger = Logger()
 
     def __init__(self, database):
         """
@@ -41,6 +44,7 @@ class AccountManager:
             result = self.database.execute_query(query=search_query, params=(person.email, person_code))
             return result
         except Exception as e:
+            AccountManager.logger.log(f"Error while checking registering: {e}")
             print("Something went wrong while checking registering...")
             return False
 
@@ -65,6 +69,7 @@ class AccountManager:
             result = self.database.execute_query(query=search_query, params=(email, password))
             return result
         except Exception as e:
+            AccountManager.logger.log(f"Error while checking for login in: {e}")
             print("Something went wrong while login in...")
             return False
 
@@ -76,12 +81,15 @@ class AccountManager:
         :param email: The email address to be validated.
         :return: True if the email address is valid, False otherwise.
         """
+        try:
+            email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
-        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-
-        if re.match(email_pattern, email):
-            return True
-        else:
+            if re.match(email_pattern, email):
+                return True
+            else:
+                return False
+        except Exception as e:
+            AccountManager.logger.log(f"Error while checking email format: {e}")
             return False
 
     @staticmethod
@@ -92,14 +100,17 @@ class AccountManager:
         :param password: The password to be validated.
         :return: True if the password is valid, False otherwise.
         """
+        try:
+            if len(password) < 8:
+                return False
 
-        if len(password) < 8:
+            if not any(char.isdigit() for char in password):
+                return False
+
+            if not any(char.isalpha() for char in password):
+                return False
+
+            return True
+        except Exception as e:
+            AccountManager.logger.log(f"Error while checking password format: {e}")
             return False
-
-        if not any(char.isdigit() for char in password):
-            return False
-
-        if not any(char.isalpha() for char in password):
-            return False
-
-        return True
