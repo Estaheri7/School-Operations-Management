@@ -285,7 +285,6 @@ class Admin(Person):
 
     @staticmethod
     def help():
-        print("Welcome!\n")
         print("1 -> Add/Remove/Update student")
         print("2 -> Add/Remove/Update teacher")
         print("3 -> Add/Remove/Update classroom")

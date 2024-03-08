@@ -266,7 +266,6 @@ class Teacher(Person):
 
     @staticmethod
     def help():
-        print("Welcome")
         print("1 -> Add grade")
         print("2 -> Search through your students.")
         print("3 -> Show grade plot of my students")

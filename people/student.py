@@ -360,7 +360,6 @@ class Student(Person):
 
     @staticmethod
     def help():
-        print("Welcome!\n")
         print("1 -> Enroll to class")
         print("2 -> Remove your enrollment from class")
         print("3 -> Show number of enrollments of classrooms")
