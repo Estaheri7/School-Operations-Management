@@ -268,6 +268,7 @@ def main() -> None:
                     print("Invalid command!")
         else:
             print("Invalid command!")
+    database.close()
 
 
 if __name__ == '__main__':
