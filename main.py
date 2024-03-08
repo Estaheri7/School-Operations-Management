@@ -1,10 +1,9 @@
-from databases import MySQLConnector, tables, create_database
+from databases import create_database
 from people import Admin, Student, Teacher, Person
-from education import Classroom, Course
 from data.initialize_data import initialize_data
 from account_management import *
-from searcher import Searcher
-from data_report import DataReport
+from search import Searcher
+from reports import DataReport
 
 
 def main() -> None:
