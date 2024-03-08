@@ -1,4 +1,5 @@
 from databases import MySQLConnector
+from logger import Logger
 import pandas as pd
 import json
 
@@ -15,6 +16,8 @@ class Classroom:
     with open("databases/db_info.json", "r") as file:
         db_info = json.load(file)
     DB = MySQLConnector(**db_info)
+
+    logger = Logger()
 
     def __init__(self, class_name, current_enrollment, class_code, course_code, teacher_code):
         """
@@ -54,7 +57,7 @@ class Classroom:
             Classroom.DB.commit()
             print("Classroom added successfully!")
         except Exception as e:
-            raise e
+            Classroom.logger.log(f"Error while adding classroom: {e}")
 
     @classmethod
     def remove_classroom(cls, class_code):
@@ -80,8 +83,8 @@ class Classroom:
             cls.DB.commit()
             print(f"Classroom with code {class_code} removed!")
         except Exception as e:
+            Classroom.logger.log(f"Error while deleting classroom: {e}")
             print("Failed to delete classroom!")
-            raise e
 
     @classmethod
     def update_classroom(cls, class_code, new_values):
@@ -110,8 +113,8 @@ class Classroom:
             cls.DB.commit()
             print(f"Records updated for classroom with code {class_code}")
         except Exception as e:
+            Classroom.logger.log(f"Error while updating classroom: {e}")
             print("Failed to update records")
-            raise e
 
     @classmethod
     def search_by_code(cls, class_code):
@@ -135,8 +138,8 @@ class Classroom:
             result = cls.DB.execute_query(query=search_query)
             return result
         except Exception as e:
+            Classroom.logger.log(f"Error while searching for classroom: {e}")
             print("Something went wrong while searching...")
-            raise e
 
     @staticmethod
     def get_attrs(file=None):
@@ -174,6 +177,7 @@ class Classroom:
                     all_classrooms.append(new_classroom)
                 return all_classrooms
             except FileNotFoundError as e:
+                Classroom.logger.log(f"CSV file not found: {e}")
                 print("File not found!")
 
         class_name = input("Enter name: ")

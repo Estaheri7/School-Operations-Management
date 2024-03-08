@@ -1,4 +1,5 @@
 from databases import MySQLConnector
+from logger import Logger
 import pandas as pd
 import json
 
@@ -16,6 +17,8 @@ class Course:
     with open("databases/db_info.json", "r") as file:
         db_info = json.load(file)
     DB = MySQLConnector(**db_info)
+
+    logger = Logger()
 
     def __init__(self, name, course_code, capacity):
         """
@@ -45,7 +48,7 @@ class Course:
             Course.DB.commit()
             print("Course added successfully!")
         except Exception as e:
-            raise e
+            Course.logger.log(f"Error while adding course: {e}")
 
     @classmethod
     def remove_course(cls, course_code):
@@ -72,8 +75,8 @@ class Course:
             cls.DB.commit()
             print(f"Course with code {course_code} removed!")
         except Exception as e:
+            Course.logger.log(f"Error while removing classroom: {e}")
             print("Failed to remove course!")
-            raise e
 
     @classmethod
     def update_course(cls, course_code, new_values):
@@ -102,8 +105,8 @@ class Course:
             cls.DB.commit()
             print(f"Records updated for course with code {course_code}")
         except Exception as e:
+            Course.logger.log(f"Error while updating classroom: {e}")
             print("Failed to update course")
-            raise e
 
     @classmethod
     def search_by_code(cls, course_code):
@@ -127,8 +130,8 @@ class Course:
             result = cls.DB.execute_query(query=search_query)
             return result
         except Exception as e:
+            Course.logger.log(f"Error while searching for classroom: {e}")
             print("Something went wrong while searching...")
-            raise e
 
     @staticmethod
     def get_attrs(file=None):
@@ -162,7 +165,9 @@ class Course:
                     all_courses.append(new_course)
                 return all_courses
             except FileNotFoundError as e:
+                Course.logger.log(f"CSV file not found: {e}")
                 print("File not found!")
+
         name = input("Enter name: ")
         course_code = input("Enter course code: ")
         capacity = int(input("Enter capacity: "))
