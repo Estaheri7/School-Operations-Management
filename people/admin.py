@@ -52,7 +52,7 @@ class Admin(Person):
             Person.DB.commit()
             print("Admin added successfully!")
         except Exception as e:
-            raise e
+            Person.logger.log(f"Error while adding admin: {e}")
 
     @classmethod
     def do_object(cls, obj):

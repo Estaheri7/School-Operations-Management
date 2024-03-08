@@ -50,7 +50,7 @@ class Student(Person):
             Person.DB.commit()
             print("Student added successfully!")
         except Exception as e:
-            raise e
+            Person.logger.log(f"Error while adding student: {e}")
 
     @staticmethod
     def remove_person(person_code):
@@ -78,8 +78,8 @@ class Student(Person):
             Person.DB.commit()
             print(f"Student with code {person_code} removed!")
         except Exception as e:
+            Person.logger.log(f"Error while removing student: {e}")
             print("Something went wrong while removing student")
-            raise e
 
     @staticmethod
     def update_student(student_code, new_values):
@@ -108,8 +108,8 @@ class Student(Person):
             Person.DB.commit()
             print(f"Records updated for student with code {student_code}")
         except Exception as e:
+            Person.logger.log(f"Error while updating student: {e}")
             print("Something went wrong while updating records")
-            raise e
 
     def enroll(self, class_code):
         """
@@ -144,8 +144,8 @@ class Student(Person):
                 Person.DB.commit()
                 print(msg)
             except Exception as e:
+                Person.logger.log(f"Error while enrolling class: {e}")
                 print("Failed to enroll class")
-                raise e
         else:
             print(msg)
 
@@ -181,8 +181,8 @@ class Student(Person):
                 Person.DB.commit()
                 print(msg)
             except Exception as e:
+                Person.logger.log(f"Error while deleting enrollment: {e}")
                 print("Failed to delete enrollment!")
-                raise e
         else:
             print(msg)
 
@@ -209,6 +209,7 @@ class Student(Person):
             result = Person.DB.execute_query(query=search_query, params=(student_code, class_code))
             return result
         except Exception as e:
+            Person.logger.log(f"Error while checking enrollment: {e}")
             print("Something went wrong when enrolling.")
             return None
 
@@ -255,8 +256,8 @@ class Student(Person):
                 Person.DB.execute_query(query=update_query)
                 Person.DB.commit()
             except Exception as e:
+                Person.logger.log(f"Error while changing enrollment value: {e}")
                 print("Something went wrong while enrolling...")
-                raise e
         elif current_enrollment > 0 and method == "delete":
             update_query = f"""
             UPDATE classrooms
@@ -267,8 +268,8 @@ class Student(Person):
                 Person.DB.execute_query(query=update_query)
                 Person.DB.commit()
             except Exception as e:
+                Person.logger.log(f"Error while changing enrollment value: {e}")
                 print("Something went wrong while canceling enrollment")
-                raise e
         elif current_enrollment == 0 and method == "delete":
             return False, "Selected class does not have enrollment at all!"
         else:
@@ -336,6 +337,7 @@ class Student(Person):
                     all_students.append(new_student)
                 return all_students
             except FileNotFoundError as e:
+                Person.logger.log(f"CSV file not found: {e}")
                 print("File not found!")
 
         name = input("Enter name: ")
