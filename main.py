@@ -43,7 +43,10 @@ def get_float_input(prompt):
 
 
 def main() -> None:
+    # create database connection
     database = create_database.db
+
+    # initialize data from JSON files
     initialize_data(
         r"data\classrooms.json",
         r"data\courses.json",
@@ -52,18 +55,22 @@ def main() -> None:
         r"data\admins.json"
     )
 
+    # create an instance of AccountManager
     AM = AccountManager(database)
 
     login = False
     while True:
         print("Welcome\n")
 
+        # prompt user to select their role
         role = input("Select your role (Student, Teacher, Admin) or -1 to exit: ").lower()
         if role == "-1":
             break
 
+        # prompt user to register or login
         pick = get_integer_input("Enter 1 to register or 2 to login: ")
 
+        # handling student role
         if role == "student":
             Person.DB = create_database.db
             current_student = None
@@ -121,6 +128,7 @@ def main() -> None:
                     report.visualize_enrollment_distribution()
                 else:
                     print("Invalid command!")
+        # handling teacher role
         elif role == "teacher":
             Person.DB = create_database.db
             current_teacher = None
@@ -187,6 +195,7 @@ def main() -> None:
                     report.visualize_grade_distribution(class_code, current_teacher.teacher_code)
                 else:
                     print("Invalid command!")
+        # handling admin role
         elif role == "admin":
             Person.DB = create_database.db
             if pick == 1:
@@ -268,8 +277,10 @@ def main() -> None:
                     print("Invalid command!")
         else:
             print("Invalid command!")
+    # close database connection
     database.close()
 
 
+# __MAIN__
 if __name__ == '__main__':
     main()
