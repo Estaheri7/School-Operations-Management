@@ -1,5 +1,6 @@
 from search import Searcher
 from education import Classroom
+from logger import Logger
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -15,6 +16,8 @@ class DataReport:
         color (str): The color of the data points.
         figsize (tuple): The size of the figure (width, height) in inches.
     """
+
+    logger = Logger()
 
     def __init__(self, title='', xlabel='', ylabel='', color='green', figsize=(5, 5)):
         """
@@ -76,7 +79,7 @@ class DataReport:
 
             plt.show()
         except Exception as e:
-            raise e
+            DataReport.logger.log(f"Error while loading plot for grade: {e}")
 
     def visualize_enrollment_distribution(self):
         """
@@ -110,7 +113,7 @@ class DataReport:
 
             plt.show()
         except Exception as e:
-            raise e
+            DataReport.logger.log(f"Error while loading plot for enrollments: {e}")
 
     def analyze_teacher_workload(self):
         """
@@ -157,4 +160,4 @@ class DataReport:
             plt.tight_layout()
             plt.show()
         except Exception as e:
-            raise e
+            DataReport.logger.log(f"Error while loading plot for teacher workload: {e}")
