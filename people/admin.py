@@ -124,6 +124,10 @@ class Admin(Person):
             student_code = input("Enter student code to update records: ")
             new_name = input("Enter new name: ")
             new_password = input("Enter new password: ")
+            while not AccountManager.is_valid_password(new_password):
+                print("1 - Password should be at least 9 characters")
+                print("2 - Password should have number and alphabet too")
+                new_password = input("Enter new password: ")
             Student.update_student(student_code, (new_name, new_password))
         else:
             print("Invalid method")
@@ -166,6 +170,10 @@ class Admin(Person):
             teacher_code = input("Enter teacher code to update records: ")
             new_name = input("Enter new name: ")
             new_password = input("Enter new password: ")
+            while not AccountManager.is_valid_password(new_password):
+                print("1 - Password should be at least 9 characters")
+                print("2 - Password should have number and alphabet too")
+                new_password = input("Enter new password: ")
             new_department = int(input("Enter new department ID: "))
             Teacher.update_teacher(teacher_code, (new_name, new_password, new_department))
         else:
@@ -274,7 +282,7 @@ class Admin(Person):
             email = input("Invalid email! try another: ")
         password = input("Enter your password: ")
         while not AccountManager.is_valid_password(password):
-            print("1 - Password should be at least 8 characters")
+            print("1 - Password should be at least 9 characters")
             print("2 - Password should have number and alphabet too")
             password = input("Enter password: ")
         gender = input("Enter your gender or blank: ")
