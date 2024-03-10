@@ -16,8 +16,3 @@ class Person(ABC):
         self.email = email
         self.password = password
         self.gender = gender
-
-    @staticmethod
-    def remove_person(person_code):
-        pass
-
